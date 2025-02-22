@@ -4,6 +4,9 @@ metadata:
   name: metrics-server
   namespace: monitoring
 spec:
+  dependsOn:
+    - name: istiod
+      namespace: istio-system
   interval: 15m
   releaseName: metrics-server
   chart:
