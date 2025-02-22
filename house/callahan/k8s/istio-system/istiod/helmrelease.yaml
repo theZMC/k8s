@@ -24,3 +24,11 @@ spec:
     profile: ambient
     global:
       meshID: k8s.callahan.house
+    replicaCount: 2
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: istiod

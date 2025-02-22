@@ -31,7 +31,7 @@ spec:
         whenUnsatisfiable: DoNotSchedule
         labelSelector:
           matchLabels:
-            app: metrics-server
+            app.kubernetes.io/name: metrics-server
     args:
       - --kubelet-insecure-tls
       - --kubelet-preferred-address-types=InternalIP
