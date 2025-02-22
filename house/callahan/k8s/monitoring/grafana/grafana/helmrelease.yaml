@@ -44,7 +44,7 @@ spec:
           - name: Loki
             uid: loki
             type: loki
-            url: http://loki
+            url: http://loki-gateway
             isDefault: false
             jsonData:
               manageAlerts: false
