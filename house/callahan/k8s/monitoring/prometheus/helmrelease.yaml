@@ -7,6 +7,8 @@ spec:
   dependsOn:
     - name: istiod
       namespace: istio-system
+    - name: tailscale-operator
+      namespace: tailscale
     - name: prometheus-operator-crds
       namespace: monitoring
   interval: 15m
@@ -34,3 +36,12 @@ spec:
       enabled: false
     prometheus-pushgateway:
       enabled: false
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: tailscale
+        hosts:
+          - prometheus
+        tls:
+          - hosts:
+              - prometheus
