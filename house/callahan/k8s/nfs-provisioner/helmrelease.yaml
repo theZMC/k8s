@@ -26,14 +26,6 @@ spec:
     remediation:
       retries: 3
   values:
-    kube-state-metrics:
-      enabled: false
-    prometheus-node-exporter:
-      enabled: false
-    alertmanager:
-      enabled: false
-    prometheus-pushgateway:
-      enabled: false
     storageClass:
       defaultClass: true
     nfs:
