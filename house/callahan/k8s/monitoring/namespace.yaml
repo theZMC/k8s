@@ -4,3 +4,4 @@ metadata:
   name: monitoring
   labels:
     toolkit.fluxcd.io/tenant: monitoring
+    istio-injection: enabled
