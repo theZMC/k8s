@@ -21,6 +21,14 @@ spec:
     remediation:
       retries: 3
   values:
+    replicas: 2
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: metrics-server
     args:
       - --kubelet-insecure-tls
       - --kubelet-preferred-address-types=InternalIP
