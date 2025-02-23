@@ -35,13 +35,13 @@ spec:
     destinations:
       - name: prometheus
         type: prometheus
-        url: http://prometheus-server/api/prom/push
+        url: http://prometheus-server/api/v1/write
       - name: loki
         type: loki
         url: http://loki-gateway/loki/api/v1/push
       - name: tempo
         type: otlp
-        url: http://tempo-gateway/otlp
+        url: http://tempo-gateway/otlp/v1/traces
     clusterMetrics:
       enabled: true
     clusterEvents:

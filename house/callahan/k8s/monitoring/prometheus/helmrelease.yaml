@@ -37,6 +37,8 @@ spec:
     prometheus-pushgateway:
       enabled: false
     server:
+      extraArgs:
+        web.enable-remote-write-receiver: null
       ingress:
         enabled: true
         ingressClassName: tailscale
