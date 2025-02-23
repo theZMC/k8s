@@ -36,6 +36,9 @@ spec:
       - name: prometheus
         type: prometheus
         url: http://prometheus-server/api/v1/write
+      - name: mimir
+        type: prometheus
+        url: http://mimir-gateway/api/v1/push
       - name: loki
         type: loki
         url: http://loki-gateway/loki/api/v1/push

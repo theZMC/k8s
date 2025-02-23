@@ -66,6 +66,18 @@ spec:
               exemplarTraceIdDestinations:
                 - datasourceUid: tempo
                   name: traceID
+          - name: Mimir
+            uid: mimir
+            type: prometheus
+            url: http://mimir-gateway/prometheus
+            isDefault: false
+            jsonData:
+              httpMethod: GET
+              manageAlerts: false
+              prometheusType: Prometheus
+              exemplarTraceIdDestinations:
+                - datasourceUid: tempo
+                  name: traceID
           - name: Tempo
             uid: tempo
             type: tempo
