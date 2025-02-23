@@ -36,6 +36,7 @@ spec:
           - host: loki
             paths:
               - path: /
+                pathType: Prefix
         tls:
           - hosts:
               - loki
