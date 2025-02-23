@@ -39,6 +39,9 @@ spec:
       - name: loki
         type: loki
         url: http://loki-gateway/loki/api/v1/push
+      - name: tempo
+        type: otlp
+        url: http://tempo-gateway/otlp
     clusterMetrics:
       enabled: true
     clusterEvents:
@@ -46,7 +49,13 @@ spec:
     podLogs:
       enabled: true
     applicationObservability:
-      enabled: false
+      enabled: true
+      receivers:
+        otlp:
+          http:
+            enabled: true
+          grpc:
+            enabled: true
     prometheusOperatorObjects:
       enabled: true
     alloy-metrics:
@@ -55,3 +64,15 @@ spec:
       enabled: true
     alloy-singleton:
       enabled: true
+    alloy-receiver:
+      enabled: true
+      alloy:
+        extraPorts:
+          - name: otlp-http
+            port: 4318
+            targetPort: 4318
+            protocol: TCP
+          - name: otlp-grpc
+            port: 4317
+            targetPort: 4317
+            protocol: TCP

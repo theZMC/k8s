@@ -1,0 +1,16 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: mesh-default
+  namespace: istio-system
+spec:
+  metrics:
+    - providers:
+        - name: opentelemetry
+  accessLogging:
+    - providers:
+        - name: opentelemetry
+  tracing:
+    - providers:
+        - name: opentelemetry
+      randomSamplingPercentage: 100

@@ -29,6 +29,14 @@ spec:
     cni:
       enabled: true
     profile: ambient
+    meshConfig:
+      enableTracing: true
+      extensionProviders:
+        - name: opentelemetry
+          opentelemetry:
+            service: k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local
+            resourceDetectors:
+              environment: {}
     global:
       meshID: k8s.callahan.house
     replicaCount: 2
