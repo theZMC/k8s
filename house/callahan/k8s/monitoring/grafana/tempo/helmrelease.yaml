@@ -25,6 +25,26 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |
+              - op: add
+                path: /spec/ports/1/appProtocol
+                value: grpc
+            target:
+              kind: Service
+              name: ^.+-(?:distributor|ingester-discovery|ingester|querier|query-frontend)$
+          - patch: |
+              - op: add
+                path: /spec/ports/1/appProtocol
+                value: grpc
+              - op: add
+                path: /spec/ports/2/appProtocol
+                value: grpc
+            target:
+              kind: Service
+              name: ^.+-query-frontend-discovery$
   values:
     gateway:
       enabled: true
