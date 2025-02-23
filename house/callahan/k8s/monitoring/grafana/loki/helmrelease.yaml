@@ -26,6 +26,8 @@ spec:
     remediation:
       retries: 3
   values:
+    test:
+      enabled: false
     gateway:
       ingress:
         enabled: true
