@@ -41,7 +41,7 @@ spec:
       extensionProviders:
         - name: opentelemetry
           opentelemetry:
-            service: k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local
+            service: k8s-monitoring-alloy-receiver.monitoring
             port: 4317
     global:
       meshID: k8s.callahan.house
