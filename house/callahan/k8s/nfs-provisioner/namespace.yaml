@@ -3,5 +3,4 @@ kind: Namespace
 metadata:
   name: nfs-provisioner
   labels:
-    toolkit.fluxcd.io/tenant: nfs-provisioner
-    istio-injection: enabled
+    istio.io/dataplane-mode: ambient

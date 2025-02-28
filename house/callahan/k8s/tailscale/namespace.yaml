@@ -3,5 +3,4 @@ kind: Namespace
 metadata:
   name: tailscale
   labels:
-    toolkit.fluxcd.io/tenant: tailscale
-    istio-injection: enabled
+    istio.io/dataplane-mode: ambient

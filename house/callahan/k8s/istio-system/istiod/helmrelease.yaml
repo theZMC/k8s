@@ -31,10 +31,18 @@ spec:
     profile: ambient
     meshConfig:
       enableTracing: true
+      defaultProviders:
+        metrics:
+          - opentelemetry
+        accessLogging:
+          - opentelemetry
+        tracing:
+          - opentelemetry
       extensionProviders:
         - name: opentelemetry
           opentelemetry:
             service: k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local
+            port: 4317
     global:
       meshID: k8s.callahan.house
     replicaCount: 2
