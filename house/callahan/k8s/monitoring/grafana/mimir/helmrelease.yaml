@@ -82,3 +82,9 @@ spec:
               - mimir
     minio:
       enabled: true
+    mimir:
+      structuredConfig:
+        querier:
+          max_concurrent: 1024
+        query_scheduler:
+          max_outstanding_requests_per_tenant: 0
