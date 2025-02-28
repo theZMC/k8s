@@ -24,10 +24,9 @@ spec:
     remediation:
       retries: 3
   values:
-    server:
-      external_services:
-        prometheus:
-          url: http://mimir.monitoring/prometheus
+    external_services:
+      prometheus:
+        url: http://mimir-gateway.monitoring/prometheus
     deployment:
       ingress:
         enabled: true
