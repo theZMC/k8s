@@ -27,7 +27,7 @@ spec:
     server:
       external_services:
         prometheus:
-          url: http://mimir.monitoring/
+          url: http://mimir.monitoring/prometheus
     deployment:
       ingress:
         enabled: true

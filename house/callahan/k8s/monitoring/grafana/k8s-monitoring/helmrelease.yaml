@@ -9,8 +9,6 @@ spec:
       namespace: istio-system
     - name: tailscale-operator
       namespace: tailscale
-    - name: prometheus
-      namespace: monitoring
     - name: loki
       namespace: monitoring
   interval: 15m
@@ -30,12 +28,11 @@ spec:
     remediation:
       retries: 3
   values:
+    crds:
+      deploy: true
     cluster:
       name: k8s.callahan.house
     destinations:
-      - name: prometheus
-        type: prometheus
-        url: http://prometheus-server/api/v1/write
       - name: mimir
         type: prometheus
         url: http://mimir-gateway/api/v1/push

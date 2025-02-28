@@ -9,8 +9,6 @@ spec:
       namespace: istio-system
     - name: tailscale-operator
       namespace: tailscale
-    - name: prometheus
-      namespace: monitoring
   interval: 15m
   releaseName: grafana
   chart:
@@ -54,23 +52,11 @@ spec:
                   name: Trace ID
                   url: "${__value.raw}"
                   urlDisplayLabel: View Trace
-          - name: Prometheus
-            uid: prom
-            type: prometheus
-            url: http://prometheus-server
-            isDefault: true
-            jsonData:
-              httpMethod: GET
-              manageAlerts: false
-              prometheusType: Prometheus
-              exemplarTraceIdDestinations:
-                - datasourceUid: tempo
-                  name: traceID
           - name: Mimir
             uid: mimir
             type: prometheus
             url: http://mimir-gateway/prometheus
-            isDefault: false
+            isDefault: true
             jsonData:
               httpMethod: GET
               manageAlerts: false
