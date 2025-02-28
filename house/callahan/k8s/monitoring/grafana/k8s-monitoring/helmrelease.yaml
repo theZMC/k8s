@@ -48,8 +48,6 @@ spec:
       enabled: true
     podLogs:
       enabled: true
-    nodeLogs:
-      enabled: true
     applicationObservability:
       enabled: true
       receivers:
