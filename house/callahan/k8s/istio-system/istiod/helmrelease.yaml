@@ -24,11 +24,11 @@ spec:
     remediation:
       retries: 3
   values:
-    env:
-      ENABLE_NATIVE_SIDECARS: true
+    profile: ambient
     cni:
       enabled: true
-    profile: ambient
+    global:
+      meshID: k8s.callahan.house
     meshConfig:
       enableTracing: true
       defaultProviders:
@@ -43,8 +43,6 @@ spec:
           opentelemetry:
             service: k8s-monitoring-alloy-receiver.monitoring
             port: 4317
-    global:
-      meshID: k8s.callahan.house
     replicaCount: 2
     topologySpreadConstraints:
       - maxSkew: 1
