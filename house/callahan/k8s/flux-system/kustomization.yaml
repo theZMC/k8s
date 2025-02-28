@@ -5,3 +5,5 @@ resources:
   - gotk-sync.yaml
   - gateway-api/gitrepo.yaml
   - gateway-api/kustomization.yaml
+  - prometheus/gitrepo.yaml
+  - prometheus/kustomization.yaml

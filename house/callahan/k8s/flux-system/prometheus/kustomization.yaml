@@ -1,14 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: gateway-api
+  name: prometheus-crds
   namespace: flux-system
 spec:
   interval: 10m
   targetNamespace: default
   sourceRef:
     kind: GitRepository
-    name: gateway-api
-  path: config/crd
+    name: prometheus-community
+  path: charts/kube-prometheus-stack/charts/crds/crds
   prune: true
   timeout: 1m

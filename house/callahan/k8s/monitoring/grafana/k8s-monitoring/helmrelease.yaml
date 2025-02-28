@@ -28,8 +28,6 @@ spec:
     remediation:
       retries: 3
   values:
-    crds:
-      deploy: true
     cluster:
       name: k8s.callahan.house
     destinations:
