@@ -20,3 +20,12 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
+      hosts:
+        - nextcloud
+      tls:
+        - hosts:
+            - nextcloud
