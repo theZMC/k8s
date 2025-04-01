@@ -25,7 +25,9 @@ spec:
       enabled: true
       className: tailscale
       hosts:
-        - nextcloud
+        - host: nextcloud
       tls:
         - hosts:
             - nextcloud
+    nextcloud:
+      host: nextcloud.snow-enigmatic.ts.net
