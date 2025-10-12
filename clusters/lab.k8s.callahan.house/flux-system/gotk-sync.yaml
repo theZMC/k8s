@@ -8,9 +8,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  secretRef:
-    name: flux-system
-  url: ssh://git@github.com/theZMC/k8s
+  url: https://github.com/theZMC/k8s.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
