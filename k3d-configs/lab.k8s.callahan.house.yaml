@@ -8,6 +8,9 @@ agents: 3
 kubeAPI:
   hostPort: "10443"
 network: k8s-lab
+options:
+  k3d:
+    disableLoadbalancer: true
 volumes:
 - volume: /dev/dri:/dev/dri # GPU passthrough
 - volume: /bigdata:/bigdata
