@@ -11,8 +11,18 @@ network: k8s-lab
 options:
   k3d:
     disableLoadbalancer: true
+  k3s:
+    extraArgs:
+    - arg: --disable=metrics-server,traefik,servicelb
+      nodeFilters:
+      - server:*
 volumes:
 - volume: /dev/dri:/dev/dri # GPU passthrough
+  nodeFilters:
+  - agent:*
 - volume: /bigdata:/bigdata
+  nodeFilters:
+  - agent:*
 - volume: /megamind:/megamind
-
+  nodeFilters:
+  - agent:*
