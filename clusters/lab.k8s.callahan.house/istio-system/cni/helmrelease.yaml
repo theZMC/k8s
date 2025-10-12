@@ -5,8 +5,8 @@ metadata:
   namespace: istio-system
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
+  - name: istiod
+    namespace: istio-system
   interval: 15m
   releaseName: cni
   chart:
@@ -25,3 +25,5 @@ spec:
       retries: 3
   values:
     profile: ambient
+    global:
+      platform: k3d
