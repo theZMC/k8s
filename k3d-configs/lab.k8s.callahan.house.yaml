@@ -6,7 +6,6 @@ metadata:
 servers: 1
 agents: 3
 kubeAPI:
-  host: lab.k8s.callahan.house
   hostPort: "10443"
 network: k8s-lab
 volumes:
