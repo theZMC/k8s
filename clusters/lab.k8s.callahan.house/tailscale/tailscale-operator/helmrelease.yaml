@@ -27,3 +27,6 @@ spec:
   - kind: Secret
     name: tailscale-operator-values
     valuesKey: values
+  values:
+    operatorConfig:
+      hostname: lab
