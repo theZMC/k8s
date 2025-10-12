@@ -30,3 +30,6 @@ spec:
   values:
     operatorConfig:
       hostname: lab
+    apiServerProxyConfig:
+      allowImpersonation: true
+      mode: "true"
