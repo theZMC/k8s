@@ -5,12 +5,12 @@ metadata:
   namespace: istio-system
 spec:
   metrics:
-    - providers:
-        - name: opentelemetry
+  - providers:
+    - name: opentelemetry
   accessLogging:
-    - providers:
-        - name: opentelemetry
+  - providers:
+    - name: opentelemetry
   tracing:
-    - providers:
-        - name: opentelemetry
-      randomSamplingPercentage: 100
+  - providers:
+    - name: opentelemetry
+    randomSamplingPercentage: 100

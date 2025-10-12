@@ -5,10 +5,10 @@ metadata:
   namespace: monitoring
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
-    - name: tailscale-operator
-      namespace: tailscale
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
   interval: 15m
   releaseName: tempo
   chart:
@@ -26,25 +26,25 @@ spec:
     remediation:
       retries: 3
   postRenderers:
-    - kustomize:
-        patches:
-          - patch: |
-              - op: add
-                path: /spec/ports/1/appProtocol
-                value: grpc
-            target:
-              kind: Service
-              name: ^.+-(?:distributor|ingester-discovery|ingester|querier|query-frontend)$
-          - patch: |
-              - op: add
-                path: /spec/ports/1/appProtocol
-                value: grpc
-              - op: add
-                path: /spec/ports/2/appProtocol
-                value: grpc
-            target:
-              kind: Service
-              name: ^.+-query-frontend-discovery$
+  - kustomize:
+      patches:
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: grpc
+        target:
+          kind: Service
+          name: ^.+-(?:distributor|ingester-discovery|ingester|querier|query-frontend)$
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: grpc
+          - op: add
+            path: /spec/ports/2/appProtocol
+            value: grpc
+        target:
+          kind: Service
+          name: ^.+-query-frontend-discovery$
   values:
     gateway:
       enabled: true
@@ -52,12 +52,12 @@ spec:
         enabled: true
         ingressClassName: tailscale
         hosts:
-          - host: tempo
-            paths:
-              - path: /
-                pathType: Prefix
+        - host: tempo
+          paths:
+          - path: /
+            pathType: Prefix
         tls:
-          - hosts:
-              - tempo
+        - hosts:
+          - tempo
     minio:
       enabled: true

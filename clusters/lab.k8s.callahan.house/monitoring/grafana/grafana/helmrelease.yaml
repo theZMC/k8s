@@ -5,10 +5,10 @@ metadata:
   namespace: monitoring
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
-    - name: tailscale-operator
-      namespace: tailscale
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
   interval: 15m
   releaseName: grafana
   chart:
@@ -39,54 +39,54 @@ spec:
       datasources.yaml:
         apiVersion: 1
         datasources:
-          - name: Loki
-            uid: loki
-            type: loki
-            url: http://loki-gateway
-            isDefault: false
-            jsonData:
-              manageAlerts: false
-              derivedFields:
-                - datasourceUid: tempo
-                  matcherRegex: '"(t|T)race(?:_|-)?id":"(\w+)"'
-                  name: Trace ID
-                  url: "${__value.raw}"
-                  urlDisplayLabel: View Trace
-          - name: Mimir
-            uid: mimir
-            type: prometheus
-            url: http://mimir-gateway/prometheus
-            isDefault: true
-            jsonData:
-              httpMethod: GET
-              manageAlerts: false
-              prometheusType: Prometheus
-              exemplarTraceIdDestinations:
-                - datasourceUid: tempo
-                  name: traceID
-          - name: Tempo
-            uid: tempo
-            type: tempo
-            url: http://tempo-gateway
-            isDefault: false
-            jsonData:
-              traceQuery:
-                timeShiftEnabled: true
-              httpMethod: GET
-              tracesToLogsV2:
-                datasourceUid: loki
-                filterByTraceId: true
-              lokiSearch:
-                datasourceUid: loki
-              tracesToMetrics:
-                datasourceUid: prom
-              serviceMap:
-                datasourceUid: prom
+        - name: Loki
+          uid: loki
+          type: loki
+          url: http://loki-gateway
+          isDefault: false
+          jsonData:
+            manageAlerts: false
+            derivedFields:
+            - datasourceUid: tempo
+              matcherRegex: '"(t|T)race(?:_|-)?id":"(\w+)"'
+              name: Trace ID
+              url: "${__value.raw}"
+              urlDisplayLabel: View Trace
+        - name: Mimir
+          uid: mimir
+          type: prometheus
+          url: http://mimir-gateway/prometheus
+          isDefault: true
+          jsonData:
+            httpMethod: GET
+            manageAlerts: false
+            prometheusType: Prometheus
+            exemplarTraceIdDestinations:
+            - datasourceUid: tempo
+              name: traceID
+        - name: Tempo
+          uid: tempo
+          type: tempo
+          url: http://tempo-gateway
+          isDefault: false
+          jsonData:
+            traceQuery:
+              timeShiftEnabled: true
+            httpMethod: GET
+            tracesToLogsV2:
+              datasourceUid: loki
+              filterByTraceId: true
+            lokiSearch:
+              datasourceUid: loki
+            tracesToMetrics:
+              datasourceUid: prom
+            serviceMap:
+              datasourceUid: prom
     ingress:
       enabled: true
       ingressClassName: tailscale
       hosts:
-        - grafana
+      - grafana
       tls:
-        - hosts:
-            - grafana
+      - hosts:
+        - grafana

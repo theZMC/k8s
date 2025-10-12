@@ -5,12 +5,12 @@ metadata:
   namespace: monitoring
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
-    - name: tailscale-operator
-      namespace: tailscale
-    - name: loki
-      namespace: monitoring
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  - name: loki
+    namespace: monitoring
   interval: 15m
   releaseName: k8s-monitoring
   chart:
@@ -29,17 +29,17 @@ spec:
       retries: 3
   values:
     cluster:
-      name: k8s.callahan.house
+      name: lab.k8s.callahan.house
     destinations:
-      - name: mimir
-        type: prometheus
-        url: http://mimir-gateway/api/v1/push
-      - name: loki
-        type: loki
-        url: http://loki-gateway/loki/api/v1/push
-      - name: tempo
-        type: otlp
-        url: http://tempo-gateway/otlp/v1/traces
+    - name: mimir
+      type: prometheus
+      url: http://mimir-gateway/api/v1/push
+    - name: loki
+      type: loki
+      url: http://loki-gateway/loki/api/v1/push
+    - name: tempo
+      type: otlp
+      url: http://tempo-gateway/otlp/v1/traces
     clusterMetrics:
       enabled: true
     clusterEvents:
@@ -66,11 +66,11 @@ spec:
       enabled: true
       alloy:
         extraPorts:
-          - name: otlp-http
-            port: 4318
-            targetPort: 4318
-            protocol: TCP
-          - name: otlp-grpc
-            port: 4317
-            targetPort: 4317
-            protocol: TCP
+        - name: otlp-http
+          port: 4318
+          targetPort: 4318
+          protocol: TCP
+        - name: otlp-grpc
+          port: 4317
+          targetPort: 4317
+          protocol: TCP

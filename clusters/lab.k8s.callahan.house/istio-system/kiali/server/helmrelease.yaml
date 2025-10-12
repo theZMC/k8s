@@ -5,8 +5,8 @@ metadata:
   namespace: istio-system
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
+  - name: istiod
+    namespace: istio-system
   interval: 15m
   releaseName: kiali
   chart:
@@ -34,16 +34,16 @@ spec:
           spec:
             ingressClassName: tailscale
             rules:
-              - host: kiali
-                http:
-                  paths:
-                    - path: /
-                      pathType: Prefix
-                      backend:
-                        service:
-                          name: kiali
-                          port:
-                            number: 20001
+            - host: kiali
+              http:
+                paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: kiali
+                      port:
+                        number: 20001
             tls:
-              - hosts:
-                  - kiali
+            - hosts:
+              - kiali

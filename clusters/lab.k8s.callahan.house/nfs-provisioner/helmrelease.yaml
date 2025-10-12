@@ -5,10 +5,10 @@ metadata:
   namespace: nfs-provisioner
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
-    - name: tailscale-operator
-      namespace: tailscale
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
   interval: 15m
   releaseName: nfs-subdir-external-provisioner
   chart:

@@ -5,8 +5,8 @@ metadata:
   namespace: istio-system
 spec:
   dependsOn:
-    - name: base
-      namespace: istio-system
+  - name: base
+    namespace: istio-system
   interval: 15m
   releaseName: istiod
   chart:
@@ -28,26 +28,26 @@ spec:
     cni:
       enabled: true
     global:
-      meshID: k8s.callahan.house
+      meshID: lab.k8s.callahan.house
     meshConfig:
       enableTracing: true
       defaultProviders:
         metrics:
-          - opentelemetry
+        - opentelemetry
         accessLogging:
-          - opentelemetry
+        - opentelemetry
         tracing:
-          - opentelemetry
+        - opentelemetry
       extensionProviders:
-        - name: opentelemetry
-          opentelemetry:
-            service: k8s-monitoring-alloy-receiver.monitoring
-            port: 4317
+      - name: opentelemetry
+        opentelemetry:
+          service: k8s-monitoring-alloy-receiver.monitoring
+          port: 4317
     replicaCount: 2
     topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: istiod
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: istiod

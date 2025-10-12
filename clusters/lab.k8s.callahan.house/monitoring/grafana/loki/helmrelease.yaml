@@ -5,10 +5,10 @@ metadata:
   namespace: monitoring
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
-    - name: tailscale-operator
-      namespace: tailscale
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
   interval: 15m
   releaseName: loki
   chart:
@@ -33,13 +33,13 @@ spec:
         enabled: true
         ingressClassName: tailscale
         hosts:
-          - host: loki
-            paths:
-              - path: /
-                pathType: Prefix
+        - host: loki
+          paths:
+          - path: /
+            pathType: Prefix
         tls:
-          - hosts:
-              - loki
+        - hosts:
+          - loki
     lokiCanary:
       enabled: false
     loki:
@@ -48,13 +48,13 @@ spec:
         replication_factor: 1
       schemaConfig:
         configs:
-          - from: "2024-04-01"
-            store: tsdb
-            object_store: s3
-            schema: v13
-            index:
-              prefix: loki_index_
-              period: 24h
+        - from: "2024-04-01"
+          store: tsdb
+          object_store: s3
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
       pattern_ingester:
         enabled: true
       limits_config:

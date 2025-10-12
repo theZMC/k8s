@@ -5,8 +5,8 @@ metadata:
   namespace: tailscale
 spec:
   dependsOn:
-    - name: istiod
-      namespace: istio-system
+  - name: istiod
+    namespace: istio-system
   interval: 15m
   releaseName: tailscale-operator
   chart:
@@ -24,6 +24,6 @@ spec:
     remediation:
       retries: 3
   valuesFrom:
-    - kind: Secret
-      name: tailscale-operator-values
-      valuesKey: values
+  - kind: Secret
+    name: tailscale-operator-values
+    valuesKey: values
