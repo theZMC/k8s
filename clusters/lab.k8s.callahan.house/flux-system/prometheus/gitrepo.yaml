@@ -7,4 +7,4 @@ spec:
   interval: 5m0s
   url: https://github.com/prometheus-community/helm-charts.git
   ref:
-    commit: 419aff1a2ee8a8ef4e46eeaddd35df8e23903822
+    commit: e10cde405227c651a3ce997c614d99beb5847f48
