@@ -4,5 +4,4 @@ metadata:
   name: metrics-server
   namespace: monitoring
 spec:
-  interval: 1h
   url: https://kubernetes-sigs.github.io/metrics-server/

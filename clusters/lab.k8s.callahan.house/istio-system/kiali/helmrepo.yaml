@@ -4,5 +4,4 @@ metadata:
   name: kiali
   namespace: istio-system
 spec:
-  interval: 1h
   url: https://kiali.org/helm-charts

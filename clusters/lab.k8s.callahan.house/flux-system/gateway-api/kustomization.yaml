@@ -4,7 +4,6 @@ metadata:
   name: gateway-api
   namespace: flux-system
 spec:
-  interval: 10m
   targetNamespace: default
   sourceRef:
     kind: GitRepository

@@ -4,5 +4,4 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
-  interval: 1h
   url: https://grafana.github.io/helm-charts
