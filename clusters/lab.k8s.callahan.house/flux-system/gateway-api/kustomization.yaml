@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: default
+  interval: 15m
   sourceRef:
     kind: GitRepository
     name: gateway-api

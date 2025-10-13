@@ -5,6 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   releaseName: loki
+  interval: 15m
   chart:
     spec:
       chart: loki

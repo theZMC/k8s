@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   releaseName: prometheus-operator-crds
+  interval: 15m
   chart:
     spec:
       chart: prometheus-operator-crds

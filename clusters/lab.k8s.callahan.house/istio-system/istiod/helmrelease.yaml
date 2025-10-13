@@ -4,10 +4,8 @@ metadata:
   name: istiod
   namespace: istio-system
 spec:
-  dependsOn:
-  - name: base
-    namespace: istio-system
   releaseName: istiod
+  interval: 15m
   chart:
     spec:
       chart: istiod
@@ -16,6 +14,9 @@ spec:
         kind: HelmRepository
         name: istio
         namespace: istio-system
+  dependsOn:
+  - name: base
+    namespace: istio-system
   values:
     profile: ambient
     cni:

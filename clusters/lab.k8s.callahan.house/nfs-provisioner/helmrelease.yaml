@@ -5,6 +5,7 @@ metadata:
   namespace: nfs-provisioner
 spec:
   releaseName: nfs-subdir-external-provisioner
+  interval: 15m
   chart:
     spec:
       chart: nfs-subdir-external-provisioner

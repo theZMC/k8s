@@ -4,10 +4,8 @@ metadata:
   name: ztunnel
   namespace: istio-system
 spec:
-  dependsOn:
-  - name: cni
-    namespace: istio-system
   releaseName: ztunnel
+  interval: 15m
   chart:
     spec:
       chart: ztunnel
@@ -16,3 +14,6 @@ spec:
         kind: HelmRepository
         name: istio
         namespace: istio-system
+  dependsOn:
+  - name: cni
+    namespace: istio-system
