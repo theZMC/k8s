@@ -7,5 +7,5 @@ spec:
   interval: 5m0s
   url: https://github.com/kubernetes-sigs/node-feature-discovery.git
   ref:
-    tag: v0.18.1
+    tag: v0.18.2
 
