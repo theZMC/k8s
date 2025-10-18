@@ -21,6 +21,8 @@ metadata:
   name: grafana
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: grafana
   interval: 15m
   chart:
@@ -108,6 +110,8 @@ metadata:
   name: k8s-monitoring
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: k8s-monitoring
   interval: 15m
   chart:
@@ -179,6 +183,8 @@ metadata:
   name: loki
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: loki
   interval: 15m
   chart:
@@ -272,6 +278,8 @@ metadata:
   name: mimir
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: mimir
   interval: 15m
   chart:
@@ -357,6 +365,8 @@ metadata:
   name: tempo
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: tempo
   interval: 15m
   chart:
@@ -423,6 +433,8 @@ metadata:
   name: prometheus-operator-crds
   namespace: lgtm
 spec:
+  driftDetection:
+    mode: enabled
   releaseName: prometheus-operator-crds
   interval: 15m
   chart:

@@ -61,6 +61,8 @@ metadata:
 spec:
   releaseName: tailscale-operator
   interval: 15m
+  driftDetection:
+    mode: enabled
   chart:
     spec:
       chart: tailscale-operator
