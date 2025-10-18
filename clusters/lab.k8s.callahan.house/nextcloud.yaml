@@ -31,6 +31,21 @@ spec:
         kind: HelmRepository
         name: nextcloud
         namespace: nextcloud
+  postRenderers:
+  - kustomize:
+      patches:
+      # For compatibility with the Tailscale operator,
+      # we need to set the Ingress host to "nextcloud"
+      # instead of the default "nextcloud.snow-enigmatic.ts.net".
+      - target:
+          group: networking.k8s.io
+          version: v1
+          kind: Ingress
+          name: nextcloud
+        patch: |
+          - op: replace
+            path: /spec/rules/0/host
+            value: nextcloud
   values:
     ingress:
       enabled: true
