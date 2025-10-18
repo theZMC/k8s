@@ -10,50 +10,53 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: kiali
-  namespace: istio-system
+  namespace: kiali
 spec:
   url: https://kiali.org/helm-charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kiali-server
-  namespace: istio-system
+  name: kiali-operator
+  namespace: kiali
 spec:
   releaseName: kiali
   interval: 15m
   chart:
     spec:
-      chart: kiali-server
+      chart: kiali-operator
       version: 2.17.0
       sourceRef:
         kind: HelmRepository
         name: kiali
-        namespace: istio-system
+        namespace: kiali
   dependsOn:
   - name: istiod
     namespace: istio-system
   values:
+    cr:
+      create: true
+      spec:
+        deployment:
+          ingress:
+            enabled: true
+            override_yaml:
+              spec:
+                ingressClassName: tailscale
+                rules:
+                - host: kiali
+                  http:
+                    paths:
+                    - path: /
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: kiali
+                          port:
+                            number: 20001
+                tls:
+                - hosts:
+                  - kiali
     external_services:
       prometheus:
         url: http://mimir-gateway.monitoring/prometheus
-    deployment:
-      ingress:
-        enabled: true
-        override_yaml:
-          spec:
-            ingressClassName: tailscale
-            rules:
-            - host: kiali
-              http:
-                paths:
-                - path: /
-                  pathType: Prefix
-                  backend:
-                    service:
-                      name: kiali
-                      port:
-                        number: 20001
-            tls:
-            - hosts:
-              - kiali
