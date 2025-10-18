@@ -27,7 +27,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-      - image: jellyfin/jellyfin:latest
+      - image: lscr.io/linuxserver/jellyfin:latest
         name: jellyfin
         resources:
           limits:
@@ -36,6 +36,13 @@ spec:
           requests:
             memory: 4Gi
             cpu: 500m
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: America/Chicago
         ports:
         - containerPort: 8096
           protocol: TCP
@@ -53,9 +60,6 @@ spec:
       - name: media
         hostPath:
           path: /bigdata/media
-      - name: dri
-        hostPath:
-          path: /dev/dri
 ---
 apiVersion: v1
 kind: Service
