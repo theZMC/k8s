@@ -20,9 +20,12 @@ volumes:
 - volume: /dev/dri:/dev/dri # GPU passthrough
   nodeFilters:
   - agent:*
+  - server:*
 - volume: /bigdata:/bigdata
   nodeFilters:
   - agent:*
+  - server:*
 - volume: /megamind:/megamind
   nodeFilters:
   - agent:*
+  - server:*
