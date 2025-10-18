@@ -23,8 +23,8 @@ spec:
         app.kubernetes.io/name: jellyfin
     spec:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 0
+        runAsGroup: 0
         fsGroup: 1000
       containers:
       - image: lscr.io/linuxserver/jellyfin:latest
@@ -37,6 +37,10 @@ spec:
             memory: 4Gi
             cpu: 500m
         env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
         - name: TZ
           value: America/Chicago
         ports:
