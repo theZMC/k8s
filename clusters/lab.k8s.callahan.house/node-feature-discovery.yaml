@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: node-feature-discovery
+  labels:
+    istio.io/dataplane-mode: ambient
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: node-feature-discovery
+  namespace: node-feature-discovery
+spec:
+  interval: 5m0s
+  url: https://github.com/kubernetes-sigs/node-feature-discovery.git
+  ref:
+    tag: v0.18.2
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: node-feature-discovery
+  namespace: node-feature-discovery
+spec:
+  targetNamespace: node-feature-discovery
+  interval: 15m
+  sourceRef:
+    kind: GitRepository
+    name: node-feature-discovery
+  path: deployment/overlays/default
+  prune: true
+  timeout: 1m
+

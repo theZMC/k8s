@@ -1,4 +1,19 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: tailscale
+  labels:
+    istio.io/dataplane-mode: ambient
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: tailscale
+  namespace: tailscale
+spec:
+  url: https://pkgs.tailscale.com/helmcharts
+---
+apiVersion: v1
 kind: Secret
 metadata:
   name: tailscale-operator-values
@@ -37,3 +52,33 @@ sops:
     fp: C2A54269A1CD7FEE4C8961AF24BCCA5F1BB96A9A
   encrypted_regex: ^(data|stringData)$
   version: 3.9.4
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tailscale-operator
+  namespace: tailscale
+spec:
+  releaseName: tailscale-operator
+  interval: 15m
+  chart:
+    spec:
+      chart: tailscale-operator
+      version: 1.88.4
+      sourceRef:
+        kind: HelmRepository
+        name: tailscale
+        namespace: tailscale
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  valuesFrom:
+  - kind: Secret
+    name: tailscale-operator-values
+    valuesKey: values
+  values:
+    operatorConfig:
+      hostname: lab
+    apiServerProxyConfig:
+      allowImpersonation: true
+      mode: "true"

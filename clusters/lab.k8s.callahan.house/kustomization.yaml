@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- intel.yaml
+- istio-system.yaml
+- jellyfin.yaml
+- kiali.yaml
+- lgtm.yaml
+- metrics-server.yaml
+- nextcloud.yaml
+- nfs-provisioner.yaml
+- node-feature-discovery.yaml
+- tailscale.yaml
+

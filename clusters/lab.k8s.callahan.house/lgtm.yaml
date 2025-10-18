@@ -1,0 +1,435 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lgtm
+  labels:
+    istio.io/dataplane-mode: ambient
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: grafana
+  namespace: lgtm
+spec:
+  url: https://grafana.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: lgtm
+spec:
+  releaseName: grafana
+  interval: 15m
+  chart:
+    spec:
+      chart: grafana
+      version: 10.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: lgtm
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  values:
+    grafana.ini:
+      auth.proxy:
+        enabled: true
+        header_name: Tailscale-User-Login
+        header_property: email
+        auto_sign_up: true
+      users:
+        auto_assign_org: true
+        auto_assign_org_role: Admin
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          uid: loki
+          type: loki
+          url: http://loki-gateway
+          isDefault: false
+          jsonData:
+            manageAlerts: false
+            derivedFields:
+            - datasourceUid: tempo
+              matcherRegex: '"(t|T)race(?:_|-)?id":"(\w+)"'
+              name: Trace ID
+              url: "${__value.raw}"
+              urlDisplayLabel: View Trace
+        - name: Mimir
+          uid: mimir
+          type: prometheus
+          url: http://mimir-gateway/prometheus
+          isDefault: true
+          jsonData:
+            httpMethod: GET
+            manageAlerts: false
+            prometheusType: Prometheus
+            exemplarTraceIdDestinations:
+            - datasourceUid: tempo
+              name: traceID
+        - name: Tempo
+          uid: tempo
+          type: tempo
+          url: http://tempo-gateway
+          isDefault: false
+          jsonData:
+            traceQuery:
+              timeShiftEnabled: true
+            httpMethod: GET
+            tracesToLogsV2:
+              datasourceUid: loki
+              filterByTraceId: true
+            lokiSearch:
+              datasourceUid: loki
+            tracesToMetrics:
+              datasourceUid: prom
+            serviceMap:
+              datasourceUid: prom
+    ingress:
+      enabled: true
+      ingressClassName: tailscale
+      hosts:
+      - grafana
+      tls:
+      - hosts:
+        - grafana
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k8s-monitoring
+  namespace: lgtm
+spec:
+  releaseName: k8s-monitoring
+  interval: 15m
+  chart:
+    spec:
+      chart: k8s-monitoring
+      version: 3.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: lgtm
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  - name: loki
+    namespace: lgtm
+  values:
+    cluster:
+      name: lab
+    destinations:
+    - name: mimir
+      type: prometheus
+      url: http://mimir-gateway/api/v1/push
+    - name: loki
+      type: loki
+      url: http://loki-gateway/loki/api/v1/push
+    - name: tempo
+      type: otlp
+      url: http://tempo-gateway/otlp/v1/traces
+    clusterMetrics:
+      enabled: true
+    clusterEvents:
+      enabled: true
+    podLogs:
+      enabled: true
+    applicationObservability:
+      enabled: true
+      receivers:
+        otlp:
+          http:
+            enabled: true
+          grpc:
+            enabled: true
+    prometheusOperatorObjects:
+      enabled: true
+    alloy-metrics:
+      enabled: true
+    alloy-logs:
+      enabled: true
+    alloy-singleton:
+      enabled: true
+    alloy-receiver:
+      enabled: true
+      alloy:
+        extraPorts:
+        - name: otlp-http
+          port: 4318
+          targetPort: 4318
+          protocol: TCP
+        - name: otlp-grpc
+          port: 4317
+          targetPort: 4317
+          protocol: TCP
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: lgtm
+spec:
+  releaseName: loki
+  interval: 15m
+  chart:
+    spec:
+      chart: loki
+      version: 6.43.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: lgtm
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  values:
+    test:
+      enabled: false
+    gateway:
+      ingress:
+        enabled: true
+        ingressClassName: tailscale
+        hosts:
+        - host: loki
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - loki
+    lokiCanary:
+      enabled: false
+    loki:
+      auth_enabled: false
+      commonConfig:
+        replication_factor: 1
+      schemaConfig:
+        configs:
+        - from: "2024-04-01"
+          store: tsdb
+          object_store: s3
+          schema: v13
+          index:
+            prefix: loki_index_
+            period: 24h
+      pattern_ingester:
+        enabled: true
+      limits_config:
+        allow_structured_metadata: true
+        volume_enabled: true
+      ruler:
+        enable_api: true
+
+    minio:
+      enabled: true
+
+    deploymentMode: SingleBinary
+
+    singleBinary:
+      replicas: 1
+
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+
+    ingester:
+      replicas: 0
+    querier:
+      replicas: 0
+    queryFrontend:
+      replicas: 0
+    queryScheduler:
+      replicas: 0
+    distributor:
+      replicas: 0
+    compactor:
+      replicas: 0
+    indexGateway:
+      replicas: 0
+    bloomCompactor:
+      replicas: 0
+    bloomGateway:
+      replicas: 0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mimir
+  namespace: lgtm
+spec:
+  releaseName: mimir
+  interval: 15m
+  chart:
+    spec:
+      chart: mimir-distributed
+      version: 5.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: lgtm
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  postRenderers:
+  - kustomize:
+      patches:
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: tcp
+        target:
+          kind: Service
+          name: .*-headless$
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: grpc
+        target:
+          kind: Service
+          name: ^.+-(?:alertmanager|compactor|distributor|ingester(-zone.*)?|overrides-exporter|querier|query-frontend|store-gateway(-zone.*))$
+      - patch: |
+          - op: add
+            path: /spec/template/metadata/labels/app.kubernetes.io~1part-of
+            value: memberlist
+          - op: add
+            path: /spec/template/spec/containers/0/ports/-
+            value:
+              containerPort: 7946
+              name: memberlist
+              protocol: TCP
+        target:
+          kind: Deployment
+          name: ^.+-query-frontend$
+  values:
+    nginx:
+      enabled: false
+    alertManager:
+      enabled: false
+    ruler:
+      enabled: false
+    query_scheduler:
+      enabled: false
+    overrides_exporter:
+      enabled: false
+    gateway:
+      enabled: true
+      enabledNonEnterprise: true
+      ingress:
+        enabled: true
+        ingressClassName: tailscale
+        hosts:
+        - host: mimir
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - mimir
+    minio:
+      enabled: true
+    mimir:
+      structuredConfig:
+        querier:
+          max_concurrent: 1024
+        query_scheduler:
+          max_outstanding_requests_per_tenant: 0
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tempo
+  namespace: lgtm
+spec:
+  releaseName: tempo
+  interval: 15m
+  chart:
+    spec:
+      chart: tempo-distributed
+      version: 1.48.1
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: lgtm
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  - name: tailscale-operator
+    namespace: tailscale
+  postRenderers:
+  - kustomize:
+      patches:
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: grpc
+        target:
+          kind: Service
+          name: ^.+-(?:distributor|ingester-discovery|ingester|querier|query-frontend)$
+      - patch: |
+          - op: add
+            path: /spec/ports/1/appProtocol
+            value: grpc
+          - op: add
+            path: /spec/ports/2/appProtocol
+            value: grpc
+        target:
+          kind: Service
+          name: ^.+-query-frontend-discovery$
+  values:
+    gateway:
+      enabled: true
+      ingress:
+        enabled: true
+        ingressClassName: tailscale
+        hosts:
+        - host: tempo
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - tempo
+    minio:
+      enabled: true
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: prometheus-community
+  namespace: lgtm
+spec:
+  url: https://prometheus-community.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus-operator-crds
+  namespace: lgtm
+spec:
+  releaseName: prometheus-operator-crds
+  interval: 15m
+  chart:
+    spec:
+      chart: prometheus-operator-crds
+      version: 24.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system

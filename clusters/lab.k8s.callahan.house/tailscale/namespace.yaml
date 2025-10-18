@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: tailscale
-  labels:
-    istio.io/use-waypoint: waypoint
-    istio.io/dataplane-mode: ambient

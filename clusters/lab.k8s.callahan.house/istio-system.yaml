@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: istio
+  namespace: istio-system
+spec:
+  url: https://istio-release.storage.googleapis.com/charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: base
+  namespace: istio-system
+spec:
+  releaseName: base
+  interval: 15m
+  chart:
+    spec:
+      chart: base
+      version: 1.27.2
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: istio-system
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cni
+  namespace: istio-system
+spec:
+  releaseName: cni
+  interval: 15m
+  chart:
+    spec:
+      chart: cni
+      version: 1.27.2
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: istio-system
+  dependsOn:
+  - name: istiod
+    namespace: istio-system
+  values:
+    profile: ambient
+    global:
+      platform: k3d
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: istiod
+  namespace: istio-system
+spec:
+  releaseName: istiod
+  interval: 15m
+  chart:
+    spec:
+      chart: istiod
+      version: 1.27.2
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: istio-system
+  dependsOn:
+  - name: base
+    namespace: istio-system
+  values:
+    profile: ambient
+    cni:
+      enabled: true
+    global:
+      meshID: lab.k8s.callahan.house
+    meshConfig:
+      enableTracing: true
+      defaultProviders:
+        metrics:
+        - opentelemetry
+        accessLogging:
+        - opentelemetry
+        tracing:
+        - opentelemetry
+      extensionProviders:
+      - name: opentelemetry
+        opentelemetry:
+          service: k8s-monitoring-alloy-receiver.monitoring
+          port: 4317
+    replicaCount: 2
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: istiod
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ztunnel
+  namespace: istio-system
+spec:
+  releaseName: ztunnel
+  interval: 15m
+  chart:
+    spec:
+      chart: ztunnel
+      version: 1.27.2
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+        namespace: istio-system
+  dependsOn:
+  - name: cni
+    namespace: istio-system
