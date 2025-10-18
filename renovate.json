@@ -7,7 +7,7 @@
   "flux": {
     "managerFilePatterns": [
       "/(?:^|/)gotk-components\\.ya?ml$/",
-      "/(?:^|/)\\w+\\.ya?ml$/"
+      "/(?:^|/)[\\w-_]+\\.ya?ml$/"
     ]
   }
 }
