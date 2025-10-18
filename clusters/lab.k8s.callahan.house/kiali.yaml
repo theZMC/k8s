@@ -37,6 +37,10 @@ spec:
     cr:
       create: true
       spec:
+        server:
+          web_fqdn: kiali.snow-enigmatic.ts.net
+          web_root: /dashboards/kiali
+          web_schema: https
         deployment:
           ingress:
             enabled: true
@@ -48,12 +52,9 @@ spec:
                   http:
                     paths:
                     - path: /
-                      pathType: Prefix
                       backend:
-                        service:
-                          name: kiali
-                          port:
-                            number: 20001
+                        serviceName: kiali
+                        servicePort: 20001
                 tls:
                 - hosts:
                   - kiali
