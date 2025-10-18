@@ -6,28 +6,25 @@ metadata:
     istio.io/dataplane-mode: ambient
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
+kind: OCIRepository
 metadata:
   name: node-feature-discovery
   namespace: node-feature-discovery
 spec:
   interval: 5m0s
-  url: https://github.com/kubernetes-sigs/node-feature-discovery.git
+  url: oci://registry.k8s.io/nfd/charts/node-feature-discovery
   ref:
-    tag: v0.18.2
+    tag: 0.18.1
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
-  name: node-feature-discovery
+  name: nfd
   namespace: node-feature-discovery
 spec:
-  targetNamespace: node-feature-discovery
   interval: 15m
-  sourceRef:
-    kind: GitRepository
+  chartRef:
+    kind: OCIRepository
     name: node-feature-discovery
-  path: deployment/overlays/default
-  prune: true
-  timeout: 1m
+    namespace: node-feature-discovery
 
