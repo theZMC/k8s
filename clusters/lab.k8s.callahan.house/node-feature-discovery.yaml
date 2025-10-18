@@ -11,7 +11,7 @@ metadata:
   name: node-feature-discovery
   namespace: node-feature-discovery
 spec:
-  interval: 5m0s
+  interval: 5m
   url: oci://registry.k8s.io/nfd/charts/node-feature-discovery
   ref:
     tag: 0.18.1
@@ -23,6 +23,7 @@ metadata:
   namespace: node-feature-discovery
 spec:
   interval: 15m
+  releaseName: nfd
   chartRef:
     kind: OCIRepository
     name: node-feature-discovery
