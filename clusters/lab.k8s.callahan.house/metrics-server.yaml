@@ -9,7 +9,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: metrics-server
-  namespace: monitoring
+  namespace: metrics-server
 spec:
   url: https://kubernetes-sigs.github.io/metrics-server/
 ---
@@ -17,7 +17,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: metrics-server
-  namespace: monitoring
+  namespace: metrics-server
 spec:
   releaseName: metrics-server
   interval: 15m
@@ -28,7 +28,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: metrics-server
-        namespace: monitoring
+        namespace: metrics-server
   dependsOn:
   - name: istiod
     namespace: istio-system
