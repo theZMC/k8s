@@ -7,10 +7,7 @@
   "flux": {
     "managerFilePatterns": [
       "/(?:^|/)gotk-components\\.ya?ml$/",
-      "/(?:^|/)helmrelease\\.ya?ml$/",
-      "/(?:^|/)gitrepo\\.ya?ml$/",
-      "/(?:^|/)helmrepo\\.ya?ml$/",
-      "/(?:^|/)ocirepo\\.ya?ml$/"
+      "/(?:^|/)\\w+\\.ya?ml$/"
     ]
   }
 }
