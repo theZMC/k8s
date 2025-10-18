@@ -43,6 +43,8 @@ spec:
           web_port: "20001"
           web_schema: https
         deployment:
+          network_policy:
+            enabled: false # does not work with ambient
           ingress:
             enabled: true
             class_name: tailscale
