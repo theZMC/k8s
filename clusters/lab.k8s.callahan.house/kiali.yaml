@@ -40,10 +40,12 @@ spec:
         server:
           web_fqdn: kiali.snow-enigmatic.ts.net
           web_root: /dashboards/kiali
+          web_port: "20001"
           web_schema: https
         deployment:
           ingress:
             enabled: true
+            class_name: tailscale
             override_yaml:
               spec:
                 ingressClassName: tailscale
@@ -52,9 +54,12 @@ spec:
                   http:
                     paths:
                     - path: /
+                      pathType: Prefix
                       backend:
-                        serviceName: kiali
-                        servicePort: 20001
+                        service:
+                          name: kiali
+                          port:
+                            number: 20001
                 tls:
                 - hosts:
                   - kiali
