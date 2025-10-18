@@ -37,10 +37,6 @@ spec:
             memory: 4Gi
             cpu: 500m
         env:
-        - name: PUID
-          value: "1000"
-        - name: PGID
-          value: "1000"
         - name: TZ
           value: America/Chicago
         ports:
@@ -51,7 +47,7 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
-        - mountPath: /media
+        - mountPath: /data
           name: media
       volumes:
       - name: config
