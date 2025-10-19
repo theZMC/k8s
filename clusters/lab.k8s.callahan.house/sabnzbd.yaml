@@ -66,15 +66,13 @@ spec:
         sysctls:
         - name: net.ipv4.conf.all.src_valid_mark
           value: "1"
-      initContainers:
+      containers:
       - name: vpn-connect
         image: lscr.io/linuxserver/wireguard:latest
-        restartPolicy: Always
         securityContext:
           capabilities:
             add:
             - NET_ADMIN
-          privileged: true
         readinessProbe:
           exec:
             command:
@@ -88,7 +86,6 @@ spec:
         - name: wg-config
           mountPath: /config/wg_confs
           readOnly: true
-      containers:
       - image: lscr.io/linuxserver/sabnzbd:4.5.3
         name: sabnzbd
         resources:
