@@ -352,6 +352,16 @@ spec:
           - mimir
     minio:
       enabled: true
+    ingester:
+      zoneAwareReplication:
+        enabled: false
+      replicas: 1
+    store_gateway:
+      zoneAwareReplication:
+        enabled: false
+      replicas: 1
+    querier:
+      replicas: 1
     mimir:
       structuredConfig:
         querier:
@@ -403,6 +413,8 @@ spec:
           kind: Service
           name: ^.+-query-frontend-discovery$
   values:
+    ingester:
+      replicas: 1
     gateway:
       enabled: true
       ingress:
