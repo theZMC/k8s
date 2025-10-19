@@ -4,7 +4,7 @@ kind: Simple
 metadata:
   name: lab
 servers: 1
-agents: 3
+agents: 0
 kubeAPI:
   hostPort: "10443"
 network: k8s-lab
@@ -15,6 +15,10 @@ options:
     extraArgs:
     - arg: --disable=metrics-server,traefik,servicelb
       nodeFilters:
+      - server:*
+    - arg: --kubelet-arg=allowed-unsafe-sysctls=net.ipv4.conf.all.src_valid_mark
+      nodeFilters:
+      - agent:*
       - server:*
 volumes:
 - volume: /dev/dri:/dev/dri # GPU passthrough
