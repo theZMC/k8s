@@ -95,7 +95,7 @@ spec:
           service:
             name: radarr
             port:
-              number: 8096
+              number: 7878
         path: /
         pathType: Prefix
   tls:

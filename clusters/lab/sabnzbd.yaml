@@ -115,7 +115,7 @@ spec:
           service:
             name: sabnzbd
             port:
-              number: 8096
+              number: 8080
         path: /
         pathType: Prefix
   tls:
