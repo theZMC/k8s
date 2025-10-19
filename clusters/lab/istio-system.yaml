@@ -21,7 +21,7 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: base
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: base
@@ -38,7 +38,7 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: cni
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: cni
@@ -62,7 +62,7 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: istiod
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: istiod
@@ -110,7 +110,7 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: ztunnel
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: ztunnel

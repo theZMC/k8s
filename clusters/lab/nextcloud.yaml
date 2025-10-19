@@ -22,7 +22,7 @@ metadata:
   namespace: nextcloud
 spec:
   releaseName: nextcloud
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: nextcloud

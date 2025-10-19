@@ -20,7 +20,7 @@ metadata:
   namespace: intel
 spec:
   releaseName: device-plugin-operator
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: intel-device-plugins-operator
@@ -42,7 +42,7 @@ metadata:
   namespace: intel
 spec:
   releaseName: gpu-device-plugin
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: intel-device-plugins-gpu

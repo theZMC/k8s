@@ -20,7 +20,7 @@ metadata:
   namespace: tailscale
 spec:
   releaseName: tailscale-operator
-  interval: 15m
+  interval: 1h
   driftDetection:
     mode: enabled
   chart:

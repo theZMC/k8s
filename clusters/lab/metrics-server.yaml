@@ -20,7 +20,7 @@ metadata:
   namespace: metrics-server
 spec:
   releaseName: metrics-server
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: metrics-server

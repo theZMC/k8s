@@ -24,7 +24,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: grafana
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: grafana
@@ -113,7 +113,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: k8s-monitoring
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: k8s-monitoring
@@ -186,7 +186,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: loki
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: loki
@@ -281,7 +281,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: mimir
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: mimir-distributed
@@ -378,7 +378,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: tempo
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: tempo-distributed
@@ -448,7 +448,7 @@ spec:
   driftDetection:
     mode: enabled
   releaseName: prometheus-operator-crds
-  interval: 15m
+  interval: 1h
   chart:
     spec:
       chart: prometheus-operator-crds
