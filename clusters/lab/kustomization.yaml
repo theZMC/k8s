@@ -4,6 +4,7 @@ resources:
 - flux-system/
 - secrets/
 - cert-manager.yaml
+- deluge.yaml
 - intel.yaml
 - istio-system.yaml
 - jellyfin.yaml

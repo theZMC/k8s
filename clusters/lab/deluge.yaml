@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sabnzbd
+  name: deluge
   labels:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/enforce-version: latest
@@ -10,18 +10,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sabnzbd
-  name: sabnzbd
-  namespace: sabnzbd
+    app: deluge
+  name: deluge
+  namespace: deluge
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: sabnzbd
+      app.kubernetes.io/name: deluge
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: sabnzbd
+        app.kubernetes.io/name: deluge
     spec:
       securityContext:
         runAsUser: 0
@@ -40,8 +40,8 @@ spec:
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
-      - image: lscr.io/linuxserver/sabnzbd:4.5.3
-        name: sabnzbd
+      - image: lscr.io/linuxserver/deluge:2.2.0
+        name: deluge
         resources:
           limits:
             memory: 512Mi
@@ -56,25 +56,20 @@ spec:
         - name: TZ
           value: America/Chicago
         ports:
-        - containerPort: 8080
+        - containerPort: 8112
           protocol: TCP
         volumeMounts:
         - mountPath: /config
           name: config
-        - mountPath: /incomplete-downloads
-          name: incomplete-downloads
         - mountPath: /downloads
-          name: complete-downloads
+          name: downloads
       volumes:
       - name: config
         hostPath:
-          path: /megamind/config/sabnzbd
-      - name: incomplete-downloads
+          path: /megamind/config/deluge
+      - name: downloads
         hostPath:
-          path: /bigdata/media/downloads/incomplete
-      - name: complete-downloads
-        hostPath:
-          path: /bigdata/media/downloads/complete
+          path: /bigdata/media/downloads
       - name: wg-config
         secret:
           secretName: wg-config
@@ -83,37 +78,55 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/name: sabnzbd
-  name: sabnzbd
-  namespace: sabnzbd
+    app.kubernetes.io/name: deluge
+  name: deluge-daemon
+  namespace: deluge
+spec:
+  ports:
+  - name: daemon
+    port: 58846
+    protocol: TCP
+    targetPort: 58846
+  selector:
+    app.kubernetes.io/name: deluge
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: deluge
+  name: deluge
+  namespace: deluge
 spec:
   ports:
   - name: http
-    port: 8080
+    port: 8112
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8112
   selector:
-    app.kubernetes.io/name: sabnzbd
+    app.kubernetes.io/name: deluge
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sabnzbd
-  namespace: sabnzbd
+  name: deluge
+  namespace: deluge
 spec:
   ingressClassName: tailscale
   rules:
-  - host: sabnzbd
+  - host: deluge
     http:
       paths:
       - backend:
           service:
-            name: sabnzbd
+            name: deluge
             port:
-              number: 8080
+              number: 8112
         path: /
         pathType: Prefix
   tls:
   - hosts:
-    - sabnzbd
+    - deluge
