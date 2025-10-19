@@ -28,4 +28,3 @@ spec:
     kind: OCIRepository
     name: node-feature-discovery
     namespace: node-feature-discovery
-

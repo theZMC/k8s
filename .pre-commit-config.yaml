@@ -1,0 +1,22 @@
+repos:
+- repo: https://github.com/trufflesecurity/trufflehog
+  rev: v3.82.13
+  hooks:
+  - id: trufflehog
+
+- repo: https://github.com/google/yamlfmt
+  rev: v0.19.0
+  hooks:
+  - id: yamlfmt
+    exclude: ^clusters/.*/flux-system/.*$
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+  - id: check-merge-conflict
+  - id: check-added-large-files
+    args: ['--maxkb=1024']

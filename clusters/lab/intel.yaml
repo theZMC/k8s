@@ -54,4 +54,3 @@ spec:
   dependsOn:
   - name: device-plugin-operator
     namespace: intel
-
