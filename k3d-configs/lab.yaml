@@ -13,7 +13,7 @@ options:
     disableLoadbalancer: true
   k3s:
     extraArgs:
-    - arg: --disable=metrics-server,traefik,servicelb
+    - arg: --disable=metrics-server,traefik,servicelb,local-storage
       nodeFilters:
       - server:*
     - arg: --kubelet-arg=allowed-unsafe-sysctls=net.ipv4.conf.all.src_valid_mark
