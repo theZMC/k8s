@@ -10,6 +10,7 @@ resources:
 - jellyfin.yaml
 - kiali.yaml
 - lgtm.yaml
+- local-path-provisioner.yaml
 - metrics-server.yaml
 - nextcloud.yaml
 - node-feature-discovery.yaml
