@@ -23,13 +23,6 @@ spec:
       labels:
         app.kubernetes.io/name: deluge
     spec:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 1000
-        sysctls:
-        - name: net.ipv4.conf.all.src_valid_mark
-          value: "1"
       containers:
       - name: vpn-connect
         image: lscr.io/linuxserver/wireguard:latest
@@ -37,6 +30,7 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
+          privileged: true
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
