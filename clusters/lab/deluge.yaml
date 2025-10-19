@@ -40,7 +40,7 @@ spec:
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
-      - image: lscr.io/linuxserver/deluge:2.2.0
+      - image: lscr.io/linuxserver/deluge:18.04.1
         name: deluge
         resources:
           limits:
