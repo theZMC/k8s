@@ -4,6 +4,8 @@ metadata:
   name: sabnzbd
   labels:
     istio.io/dataplane-mode: ambient
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
 ---
 apiVersion: v1
 kind: Secret
@@ -61,6 +63,9 @@ spec:
         runAsUser: 0
         runAsGroup: 0
         fsGroup: 1000
+        sysctls:
+        - name: net.ipv4.conf.all.src_valid_mark
+          value: "1"
       initContainers:
       - name: vpn-connect
         image: lscr.io/linuxserver/wireguard:latest
@@ -68,6 +73,7 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
+          privileged: true
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
