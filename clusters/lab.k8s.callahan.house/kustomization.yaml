@@ -12,5 +12,7 @@ resources:
 - nextcloud.yaml
 - nfs-provisioner.yaml
 - node-feature-discovery.yaml
+- radarr.yaml
+- sabnzbd.yaml
 - tailscale.yaml
 
