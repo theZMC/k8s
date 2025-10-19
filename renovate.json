@@ -15,7 +15,7 @@
     "packageRules": [
       {
         "matchPackageNames": ["/^lscr.io\/linuxserver\/.*/"],
-        "allowedVersions": "!/2021.*/"
+        "allowedVersions": "!/(20|18).*/"
       }
     ]
   }
