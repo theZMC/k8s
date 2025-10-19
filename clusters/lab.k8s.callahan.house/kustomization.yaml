@@ -11,7 +11,6 @@ resources:
 - lgtm.yaml
 - metrics-server.yaml
 - nextcloud.yaml
-- nfs-provisioner.yaml
 - node-feature-discovery.yaml
 - radarr.yaml
 - sabnzbd.yaml
