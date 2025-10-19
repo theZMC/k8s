@@ -14,6 +14,7 @@ resources:
 - metrics-server.yaml
 - nextcloud.yaml
 - node-feature-discovery.yaml
+- prowlarr.yaml
 - radarr.yaml
 - sabnzbd.yaml
 - tailscale.yaml
