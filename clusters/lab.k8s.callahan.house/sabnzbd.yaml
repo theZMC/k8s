@@ -69,11 +69,21 @@ spec:
       initContainers:
       - name: vpn-connect
         image: lscr.io/linuxserver/wireguard:latest
+        restartPolicy: Always
         securityContext:
           capabilities:
             add:
             - NET_ADMIN
           privileged: true
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - ip addr show dev wg0 | grep -q "inet "
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          failureThreshold: 3
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
