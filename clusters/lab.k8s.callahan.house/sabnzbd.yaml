@@ -1,0 +1,147 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sabnzbd
+  labels:
+    istio.io/dataplane-mode: ambient
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wg-config
+  namespace: sabnzbd
+type: Opaque
+stringData:
+  wg0.conf: ENC[AES256_GCM,data:h99ITwh17fhxeCb601iHPiqhpcDPumTmKiRj6Q3/Fs+305uyCmUuet4z8/BiZP0QSxMv/AeXLHi5IAjn+uPOFhy4put0D99eOeoEIZDXYJ74oW6KuzIrDqnwgj0uwzyCEjYkSjRAzFbwkeM5Gdh23qIVAOJrQFocAlHyKgtzfm9gstARRvRaq9wsBc0eztIrT1xlsWfI3JmOd5SYpDgKQStC2TUxhD56E2ET7PHQEPqdvXaLFD2KYt9oaG0pDW6GhF+ZnvqnFXyEBbAtZ0Yw8Jvd87q9xitt1C4XG4PQsbsUX0/VKfonffw42TbRyMc2x7SrvEFI/AhNMPfL46NqHQhS+FLV2h//N8iaQuBM0M6QPh5RVrGmm6+lxpupxMEMUS+kOaXJ6G0IvpuIn9j2mZt0JkCs87Xn+oKnGzNvZ7OEMvyrsteoqCRazgNTNOdkBSkHChVe0u6HS3UkZ7Auloa+,iv:o20zg5qFDWTDNpai+WcFexwC2QvSLXejJvqP/W4KQrw=,tag:P6FN6ScoLevXGlQq56lCyg==,type:str]
+sops:
+  lastmodified: "2025-10-19T15:11:56Z"
+  mac: ENC[AES256_GCM,data:3xtaE9E8hgRcjOlJ762ZokGSdH12U1aK/QkZ/MzALpHM6CQn1wmH3RTdJhxNLphNEbCtyLMEmoGM8Y9xl9sz5Ujuygenr8J21g+0qitY3ftwAFvaiwkHwjrnz5dssG/7KYMDHtto1TxaZW82nwA4MVHXfjTxBom6/i8lZNQMOBo=,iv:qVOqqr6HCR4UdpjV67oMD91thDublSlvoO0YVSLdVKM=,tag:7bQIPqIc03y9vPvQSAULWQ==,type:str]
+  pgp:
+  - created_at: "2025-10-19T15:11:56Z"
+    enc: |-
+      -----BEGIN PGP MESSAGE-----
+
+      hQIMAwAAAAAAAAAAAQ/+MHqw4a3yaISuC7PH6YqmO5/JjwG4e9bRJO984OzXoYAP
+      0/DkPLXfAgB0OoB+gEf4dxAp5MgAtXIoedi7K42p2/UYmpmkfs9tgJfpQ68dCT4y
+      ascyNUCT4XQMbRLwANOit7nGV+B5tzfRTVmT/7c6CxdwtyBZd+Vea8VgemZCsJQe
+      68KAe5ypx2vsthWyCUurJQEUhWT+SFGmHcleOSzKYnIVJW4Jv6wfmp1sHDk2qzt3
+      pFCZ2mpP/iZUUdax0CP0T1jvIgJBHe0hhFwFgh325zSQdw8Nrv91QyHqSZsq2ury
+      7lKMhZY1WkZeQRW31ou+eLQAkZoGMTHqn9Q5FFN4WthzY5lF0SE0/Dq3QrL7X6bp
+      VPMPqFtL+HxHvTq/cAFp3NaMhs4YKnQLDuck4mmcFkvCmRHzaP9hM8U6Qqgm/cxj
+      CI8s6d38ztbZnJW5tfTrU4ADQp82+7kz2DWfbeeLyePETugd2XZQVrDBOBmRlgfy
+      3rAZ8NVOwRQjq3hWTfhVrEXLNxteyMXcGVWlvI4e/xr/YjVmDJabynMSvHt9xBb9
+      K3+rf64RiQOsBxnthZI6vUDdi+3x2IRAv7kqLo1sZRZucBG/+1vABfqErXrJR/r9
+      h6BEwwefLaHMtVZSnscSodTpUDaHbZaFbYfaBKY0hzYdZdoINqMZNwXnR0l0G9LS
+      XgED2kF4bx1OvpZJdL3uN0d7vG59mmPfIss+w2852YLZk4HCwmQRBp/PMMA/rgvv
+      nwnxcl043T/fcWLe5Sc/hcRUHv83jwfe/d0wsqWca6i/D71MYiniD4alC6P9t5o=
+      =QT/b
+      -----END PGP MESSAGE-----
+    fp: C2A54269A1CD7FEE4C8961AF24BCCA5F1BB96A9A
+  encrypted_regex: ^(data|stringData)$
+  version: 3.11.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sabnzbd
+  name: sabnzbd
+  namespace: sabnzbd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sabnzbd
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sabnzbd
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 1000
+      initContainers:
+      - name: vpn-connect
+        image: lscr.io/linuxserver/wireguard:latest
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        volumeMounts:
+        - name: wg-config
+          mountPath: /config/wg_confs
+          readOnly: true
+      containers:
+      - image: lscr.io/linuxserver/sabnzbd:4.5.3
+        name: sabnzbd
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+            cpu: 250m
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: America/Chicago
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+      volumes:
+      - name: config
+        hostPath:
+          path: /megamind/config/sabnzbd
+      - name: downloads
+        hostPath:
+          path: /bigdata/media/downloads
+      - name: wg-config
+        secret:
+          secretName: wg-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: sabnzbd
+  name: sabnzbd
+  namespace: sabnzbd
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: sabnzbd
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sabnzbd
+  namespace: sabnzbd
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: sabnzbd
+    http:
+      paths:
+      - backend:
+          service:
+            name: sabnzbd
+            port:
+              number: 8096
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - sabnzbd
