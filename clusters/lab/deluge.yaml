@@ -79,7 +79,7 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: deluge
-  name: deluge-daemon
+  name: daemon
   namespace: deluge
 spec:
   ports:
