@@ -9,5 +9,8 @@
       "/(?:^|/)gotk-components\\.ya?ml$/",
       "/(?:^|/)[\\w-_]+\\.ya?ml$/"
     ]
+  },
+  "kubernetes": {
+    "managerFilePatterns": ["/\\.yaml$/"]
   }
 }

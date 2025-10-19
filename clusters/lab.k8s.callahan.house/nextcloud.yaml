@@ -57,4 +57,3 @@ spec:
         - nextcloud
     nextcloud:
       host: nextcloud.snow-enigmatic.ts.net
-
