@@ -27,7 +27,7 @@ spec:
         runAsGroup: 0
         fsGroup: 1000
       containers:
-      - image: lscr.io/linuxserver/jellyfin:latest
+      - image: lscr.io/linuxserver/jellyfin:10.10.7
         name: jellyfin
         resources:
           limits:
