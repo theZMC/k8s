@@ -11,6 +11,12 @@
     ]
   },
   "kubernetes": {
-    "managerFilePatterns": ["/\\.yaml$/"]
+    "managerFilePatterns": ["/\\.yaml$/"],
+    "packageRules": [
+      {
+        "matchPackageNames": ["/^lscr.io\/linuxserver\/.*/"],
+        "allowedVersions": "!/2021.*/"
+      }
+    ]
   }
 }
