@@ -7,7 +7,7 @@ servers: 1
 agents: 0
 kubeAPI:
   hostPort: "10443"
-network: k8s-lab
+network: lab
 options:
   k3d:
     disableLoadbalancer: true

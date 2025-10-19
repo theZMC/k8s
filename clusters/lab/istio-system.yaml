@@ -79,7 +79,7 @@ spec:
     cni:
       enabled: true
     global:
-      meshID: lab.k8s.callahan.house
+      meshID: lab
     meshConfig:
       enableTracing: true
       defaultProviders:

@@ -17,7 +17,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./clusters/lab.k8s.callahan.house
+  path: ./clusters/lab
   prune: true
   sourceRef:
     kind: GitRepository
