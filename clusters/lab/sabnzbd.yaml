@@ -70,15 +70,20 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
+        - mountPath: /incomplete-downloads
+          name: incomplete-downloads
         - mountPath: /downloads
-          name: downloads
+          name: complete-downloads
       volumes:
       - name: config
         hostPath:
           path: /megamind/config/sabnzbd
-      - name: downloads
+      - name: incomplete-downloads
         hostPath:
-          path: /bigdata/media/downloads
+          path: /bigdata/media/downloads/incomplete
+      - name: complete-downloads
+        hostPath:
+          path: /bigdata/media/downloads/complete
       - name: wg-config
         secret:
           secretName: wg-config
