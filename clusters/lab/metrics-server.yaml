@@ -33,7 +33,7 @@ spec:
   - name: istiod
     namespace: istio-system
   values:
-    replicas: 2
+    replicas: 1
     topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
