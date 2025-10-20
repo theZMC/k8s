@@ -219,6 +219,9 @@ spec:
       enabled: false
     loki:
       auth_enabled: false
+      structuredConfig:
+        memberlist:
+          cluster_label: loki
       commonConfig:
         replication_factor: 1
       schemaConfig:
@@ -364,6 +367,8 @@ spec:
       replicas: 1
     mimir:
       structuredConfig:
+        memberlist:
+          cluster_label: mimir
         querier:
           max_concurrent: 1024
         query_scheduler:
@@ -392,29 +397,16 @@ spec:
     namespace: istio-system
   - name: tailscale-operator
     namespace: tailscale
-  postRenderers:
-  - kustomize:
-      patches:
-      - patch: |
-          - op: add
-            path: /spec/ports/1/appProtocol
-            value: grpc
-        target:
-          kind: Service
-          name: ^.+-(?:distributor|ingester-discovery|ingester|querier|query-frontend)$
-      - patch: |
-          - op: add
-            path: /spec/ports/1/appProtocol
-            value: grpc
-          - op: add
-            path: /spec/ports/2/appProtocol
-            value: grpc
-        target:
-          kind: Service
-          name: ^.+-query-frontend-discovery$
   values:
     ingester:
       replicas: 1
+    tempo:
+      structuredConfig:
+        memberlist:
+          cluster_label: tempo
+      memberlist:
+        appProtocol: grpc
+
     gateway:
       enabled: true
       ingress:
