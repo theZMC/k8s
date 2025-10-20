@@ -358,7 +358,7 @@ spec:
     ingester:
       zoneAwareReplication:
         enabled: false
-      replicas: 1
+      replicas: 2
     store_gateway:
       zoneAwareReplication:
         enabled: false
