@@ -4,6 +4,9 @@
     "config:recommended",
     "group:allNonMajor"
   ],
+  "pre-commit": {
+    "enabled": true
+  },
   "flux": {
     "managerFilePatterns": [
       "/(?:^|/)gotk-components\\.ya?ml$/",
