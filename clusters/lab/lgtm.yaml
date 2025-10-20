@@ -375,6 +375,9 @@ spec:
       structuredConfig:
         memberlist:
           cluster_label: mimir
+        limits:
+          max_global_series_per_user: 0
+          max_label_names_per_series: 0
         querier:
           max_concurrent: 1024
         query_scheduler:
@@ -412,7 +415,6 @@ spec:
           cluster_label: tempo
       memberlist:
         appProtocol: grpc
-
     gateway:
       enabled: true
       ingress:
