@@ -142,6 +142,12 @@ spec:
     - name: tempo
       type: otlp
       url: http://tempo-gateway/otlp/v1/traces
+    annotationAutodiscovery:
+      enabled: true
+      annotations:
+        scrape: prometheus.io/scrape
+        metricsPath: prometheus.io/path
+        metricsPortNumber: prometheus.io/port
     clusterMetrics:
       enabled: true
     clusterEvents:
