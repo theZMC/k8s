@@ -92,9 +92,9 @@ spec:
             lokiSearch:
               datasourceUid: loki
             tracesToMetrics:
-              datasourceUid: prom
+              datasourceUid: mimir
             serviceMap:
-              datasourceUid: prom
+              datasourceUid: mimir
     ingress:
       enabled: true
       ingressClassName: tailscale
