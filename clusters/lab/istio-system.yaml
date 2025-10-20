@@ -92,9 +92,8 @@ spec:
       extensionProviders:
       - name: opentelemetry
         opentelemetry:
-          service: k8s-monitoring-alloy-receiver.monitoring
+          service: k8s-monitoring-alloy-receiver.lgtm
           port: 4317
-    replicaCount: 2
     topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
