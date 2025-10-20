@@ -408,7 +408,7 @@ spec:
     namespace: tailscale
   values:
     ingester:
-      replicas: 1
+      replicas: 2
     tempo:
       structuredConfig:
         memberlist:
