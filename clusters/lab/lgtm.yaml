@@ -73,6 +73,12 @@ spec:
       users:
         auto_assign_org: true
         auto_assign_org_role: Admin
+    extraVolumes:
+    - name: istio-dashboards
+      emptyDir: {}
+    extraVolumeMounts:
+    - name: istio-dashboards
+      mountPath: /var/lib/grafana/dashboards/istio
     dashboards:
       istio:
         mesh:
