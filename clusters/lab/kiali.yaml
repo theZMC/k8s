@@ -155,3 +155,4 @@ spec:
               password: secret:grafana:admin-password
           prometheus:
             url: http://mimir-gateway.lgtm
+            health_check_url: http://mimir-gateway.lgtm
