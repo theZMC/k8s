@@ -65,6 +65,6 @@ spec:
                 tls:
                 - hosts:
                   - kiali
-    external_services:
-      prometheus:
-        url: http://mimir-gateway.monitoring/prometheus
+        external_services:
+          prometheus:
+            url: http://mimir-gateway.lgtm/prometheus
