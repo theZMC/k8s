@@ -401,8 +401,8 @@ spec:
         memberlist:
           cluster_label: mimir
         limits:
-          max_global_series_per_user: 0
-          max_label_names_per_series: 0
+          max_global_series_per_user: 50000
+          max_label_names_per_series: 250
         querier:
           max_concurrent: 1024
         query_scheduler:
