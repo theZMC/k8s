@@ -154,4 +154,4 @@ spec:
               username: secret:grafana:admin-user
               password: secret:grafana:admin-password
           prometheus:
-            url: http://mimir-gateway.lgtm/prometheus
+            url: http://mimir-gateway.lgtm
