@@ -14,6 +14,85 @@ metadata:
 spec:
   url: https://kiali.org/helm-charts
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: grafana-secret-copier
+  namespace: kiali
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: create-secret
+  namespace: kiali
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: grafana-secret-copier-create
+  namespace: kiali
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: create-secret
+subjects:
+- kind: ServiceAccount
+  name: grafana-secret-copier
+  namespace: kiali
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-secret-copier
+  namespace: kiali
+spec:
+  template:
+    spec:
+      serviceAccountName: grafana-secret-copier
+      containers:
+      - name: copy-secret
+        env:
+        - name: SOURCE_NAMESPACE
+          value: lgtm
+        - name: TARGET_NAMESPACE
+          value: kiali
+        - name: SOURCE_SECRET_NAME
+          value: grafana
+        - name: TARGET_SECRET_NAME
+          value: grafana
+        image: docker.io/alpine/kubectl:1.34.1
+        command:
+        - /bin/sh
+        - -c
+        - |
+          if kubectl -n "${TARGET_NAMESPACE}" get secret "${TARGET_SECRET_NAME}" >/dev/null 2>&1; then
+            echo "${TARGET_SECRET_NAME} secret already exists in ${TARGET_NAMESPACE} namespace. Exiting."
+            exit 0
+          fi
+
+          count=0
+          until GRAFANA_SECRET=$(kubectl -n lgtm get secret grafana -o yaml 2>/dev/null); do
+            if [ $count -ge 120 ]; then
+              seconds=$((120 * 5))
+              minutes=$((seconds / 60))
+              echo "Timed out after ${minutes} minutes (${seconds} seconds) waiting for ${SOURCE_SECRET_NAME} secret to exist in ${SOURCE_NAMESPACE} namespace. Exiting."
+              exit 1
+            fi
+
+            count=$((count + 1))
+
+            echo "Waiting for ${SOURCE_SECRET_NAME} secret to exist in ${SOURCE_NAMESPACE} namespace..."
+            sleep 5
+          done
+
+          echo "${GRAFANA_SECRET}" | sed "s/namespace: ${SOURCE_NAMESPACE}/namespace: ${TARGET_NAMESPACE}/" | kubectl apply -f -
+      restartPolicy: OnFailure
+  backoffLimit: 4
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:

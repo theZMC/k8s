@@ -7,6 +7,31 @@ metadata:
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/enforce-version: latest
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secret-getter
+  namespace: lgtm
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["grafana"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kiali-grafana-secret-access
+  namespace: lgtm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: secret-getter
+subjects:
+- kind: ServiceAccount
+  name: grafana-secret-copier
+  namespace: kiali
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
