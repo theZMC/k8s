@@ -14,6 +14,8 @@ metadata:
   namespace: jellyfin
 spec:
   replicas: 1
+  strategy:
+    type: Recreate # To prevent GPU assignment contention
   selector:
     matchLabels:
       app.kubernetes.io/name: jellyfin
