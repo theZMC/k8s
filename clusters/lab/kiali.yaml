@@ -145,5 +145,13 @@ spec:
                 - hosts:
                   - kiali
         external_services:
+          grafana:
+            enabled: true
+            internal_url: http://grafana.lgtm/
+            external_url: https://grafana.snow-enigmatic.ts.net/
+            auth:
+              type: basic
+              username: secret:grafana:admin-user
+              password: secret:grafana:admin-password
           prometheus:
             url: http://mimir-gateway.lgtm/prometheus
