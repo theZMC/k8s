@@ -13,21 +13,23 @@ volumes for data persistence.
 
 This cluster runs several self-hosted applications:
 
-- **Jellyfin** - Media streaming server
-- **Deluge** - Torrent client
-- **Sabnzbd** - Usenet client
-- **Prowlarr** - Indexer manager
-- **Radarr** - Movie collection manager
-- **Nextcloud** - Personal cloud storage
-- **Intel** - GPU device plugin for Intel graphics
-- **Istio** - Service mesh
-- **Kiali** - Istio observability
-- **Cert-Manager** - Certificate management
-- **Tailscale** - Ingress controller
-- **Metrics Server** - Resource metrics
-- **Node Feature Discovery** - Hardware detection
-- **LTGM** - Loki, Tempo, Grafana, and Mimir stack for logging, tracing, and
-  metrics
+| Application                                                                          | Description                                                          |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| [jellyfin](https://jellyfin.org/)                                                    | Media streaming server                                               |
+| [deluge](https://deluge-torrent.org/)                                                | Torrent client                                                       |
+| [sabnzbd](https://sabnzbd.org/)                                                      | Usenet client                                                        |
+| [prowlarr](https://prowlarr.com/)                                                    | Indexer manager                                                      |
+| [radarr](https://radarr.video/)                                                      | Movie collection manager                                             |
+| [nextcloud](https://nextcloud.com/)                                                  | Personal cloud storage                                               |
+| [intel-device-plugins](https://github.com/intel/intel-device-plugins-for-kubernetes) | GPU device plugins for Intel graphics                                |
+| [istio](https://istio.io/)                                                           | Service mesh                                                         |
+| [kiali](https://kiali.org/)                                                          | Istio observability                                                  |
+| [cert-manager](https://cert-manager.io/)                                             | TLS Certificate management                                           |
+| [tailscale-operator](https://github.com/tailscale/tailscale)                         | Tailscale Kubernetes operator for secure networking                  |
+| [metrics-server](https://github.com/kubernetes-sigs/metrics-server)                  | Resource metrics                                                     |
+| [node-feature-discovery](https://github.com/kubernetes-sigs/node-feature-discovery)  | Hardware detection                                                   |
+| [lgtm](https://grafana.com/)                                                         | Logging, tracing, and monitoring stack (Loki, Grafana, Tempo, Mimir) |
+| [local-path-provisioner](https://github.com/rancher/local-path-provisioner)          | Local storage provisioner                                            |
 
 ## Prerequisites
 
