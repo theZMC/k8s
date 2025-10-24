@@ -34,7 +34,7 @@ spec:
         volumeMounts:
         - name: wg-config
           mountPath: /config/wg_confs
-      - image: lscr.io/linuxserver/sabnzbd:4.5.3
+      - image: lscr.io/linuxserver/sabnzbd:4.5.5
         name: sabnzbd
         resources:
           limits:
