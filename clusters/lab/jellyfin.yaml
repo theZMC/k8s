@@ -39,6 +39,8 @@ spec:
             memory: 4Gi
             cpu: 500m
         env:
+        - name: DOCKER_MODS
+          value: linuxserver/mods:jellyfin-opencl-intel
         - name: PUID
           value: "1000"
         - name: PGID
