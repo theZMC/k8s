@@ -1,0 +1,4 @@
+resources:
+- helmrepository.yaml
+- device-plugin-operator-hr.yaml
+- gpu-device-plugin-hr.yaml

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: radarr
+  name: radarr
+  namespace: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: radarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: radarr
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 1000
+      containers:
+      - image: lscr.io/linuxserver/radarr:5.28.0
+        name: radarr
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+            cpu: 250m
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: America/Chicago
+        ports:
+        - containerPort: 7878
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /movies
+          name: movies
+        - mountPath: /downloads
+          name: downloads
+      volumes:
+      - name: config
+        hostPath:
+          path: /megamind/config/radarr
+      - name: movies
+        hostPath:
+          path: /bigdata/media/movies
+      - name: downloads
+        hostPath:
+          path: /bigdata/media/downloads

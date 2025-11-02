@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k8s-monitoring
+spec:
+  releaseName: k8s-monitoring
+  targetNamespace: k8s-monitoring
+  driftDetection:
+    mode: enabled
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: k8s-monitoring
+  values:
+    annotationAutodiscovery:
+      enabled: true
+      annotations:
+        scrape: prometheus.io/scrape
+        metricsPath: prometheus.io/path
+        metricsPortNumber: prometheus.io/port
+    clusterMetrics:
+      enabled: true
+    clusterEvents:
+      enabled: true
+    podLogs:
+      enabled: true
+    applicationObservability:
+      enabled: true
+      receivers:
+        otlp:
+          http:
+            enabled: true
+          grpc:
+            enabled: true
+    prometheusOperatorObjects:
+      enabled: true
+    alloy-metrics:
+      enabled: true
+    alloy-logs:
+      enabled: true
+    alloy-singleton:
+      enabled: true
+    alloy-receiver:
+      enabled: true
+      alloy:
+        extraPorts:
+        - name: otlp-http
+          port: 4318
+          targetPort: 4318
+          protocol: TCP
+        - name: otlp-grpc
+          port: 4317
+          targetPort: 4317
+          protocol: TCP

@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tempo
+  namespace: lgtm
+spec:
+  driftDetection:
+    mode: enabled
+  releaseName: tempo
+  targetNamespace: tempo
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: tempo-distributed
+  values:
+    ingester:
+      replicas: 2 # breaks if set to 1 ⎺\_(ツ)_/⎺
+    tempo:
+      structuredConfig:
+        memberlist:
+          cluster_label: tempo
+      memberlist:
+        appProtocol: grpc
+    gateway:
+      enabled: true
+      ingress:
+        enabled: true
+        ingressClassName: tailscale
+        hosts:
+        - host: tempo
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - tempo
+    minio:
+      enabled: true

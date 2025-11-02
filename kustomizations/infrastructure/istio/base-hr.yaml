@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: base
+spec:
+  targetNamespace: istio-system
+  storageNamespace: flux-system
+  releaseName: base
+  interval: 1h
+  chart:
+    spec:
+      chart: base
+      version: 1.27.3
+      sourceRef:
+        kind: HelmRepository
+        name: istio

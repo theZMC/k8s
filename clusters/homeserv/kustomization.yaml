@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+namespace: flux-system
+kind: Kustomization
+resources:
+- flux-system/
+- cert-manager.yaml
+- deluge.yaml
+- intel.yaml
+- istio-system.yaml
+- jellyfin.yaml
+- kiali.yaml
+- lgtm.yaml
+- local-path-provisioner.yaml
+- metrics-server.yaml
+- nextcloud.yaml
+- node-feature-discovery.yaml
+- prowlarr.yaml
+- radarr.yaml
+- sabnzbd.yaml
+- tailscale.yaml
+- secrets/

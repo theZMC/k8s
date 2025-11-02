@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/ocirepository-source-v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: tempo-distributed
+spec:
+  interval: 1h
+  url: oci://ghcr.io/grafana/helm-charts/tempo-distributed
+  ref:
+    tag: 1.52.7
