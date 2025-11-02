@@ -38,22 +38,19 @@ spec:
       kind: HelmRelease
       name: tailscale-operator
   - patch: |
-      - op: add
-        path: /spec/dependsOn/-
+      - op: replace
+        path: /spec/dependsOn
         value:
-          name: istiod
+        - name: istiod
           namespace: istio-system
-      - op: add
-        path: /spec/valuesFrom/-
+      - op: replace
+        path: /spec/valuesFrom
         value:
-          kind: Secret
+        - kind: Secret
           name: oauth
           valuesKey: client-id
           targetPath: oauth.clientId
-      - op: add
-        path: /spec/valuesFrom/-
-        value:
-          kind: Secret
+        - kind: Secret
           name: oauth
           valuesKey: client-secret
           targetPath: oauth.clientSecret
