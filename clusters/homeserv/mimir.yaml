@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mimir
+  namespace: flux-system
+spec:
+  interval: 1h
+  retryInterval: 2m
+  timeout: 5m
+  sourceRef:
+    kind: OCIRepository
+    name: flux-system
+    namespace: flux-system
+  path: ./base/applications/mimir
+  prune: true
+  wait: true
+  patches:
+  - patch: |-
+      spec:
+        values:
+          gateway:
+            enabled: true
+            enabledNonEnterprise: true
+            ingress:
+              enabled: true
+              ingressClassName: tailscale
+              hosts:
+              - host: mimir
+                paths:
+                - path: /
+                  pathType: Prefix
+              tls:
+              - hosts:
+                - mimir
+    target:
+      kind: HelmRelease
+      name: mimir
+  - patch: |
+      - op: replace
+        path: /spec/dependsOn
+        value:
+        - kind: HelmRelease
+          name: tailscale-operator
+        - kind: HelmRelease
+          name: istiod
+    target:
+      kind: HelmRelease
+      name: mimir

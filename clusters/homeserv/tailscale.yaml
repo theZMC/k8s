@@ -1,0 +1,49 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tailscale
+  namespace: flux-system
+spec:
+  targetNamespace: tailscale
+  interval: 1h
+  retryInterval: 2m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  path: ./base/infrastructure/tailscale
+  prune: true
+  wait: true
+  patches:
+  - patch: |-
+      spec:
+        values:
+          operatorConfig:
+            hostname: homeserv
+    target:
+      kind: HelmRelease
+      name: tailscale-operator
+  - patch: |
+      - op: add
+        path: /spec/dependsOn/-
+        value:
+          name: istiod
+          namespace: istio-system
+      - op: add
+        path: /spec/valuesFrom/-
+        value:
+          kind: Secret
+          name: oauth
+          valuesKey: client-id
+          targetPath: oauth.clientId
+      - op: add
+        path: /spec/valuesFrom/-
+        value:
+          kind: Secret
+          name: oauth
+          valuesKey: client-secret
+          targetPath: oauth.clientSecret
+    target:
+      kind: HelmRelease
+      name: tailscale-operator

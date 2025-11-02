@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: k8s-monitoring
+  namespace: flux-system
+spec:
+  interval: 1h
+  retryInterval: 2m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  path: ./base/infrastructure/k8s-monitoring
+  prune: true
+  wait: true
+  patches:
+  - patch: |-
+      spec:
+        values:
+          cluster:
+            name: homeserv
+  - patch: |
+      - op: replace
+        path: /spec/dependsOn
+        value:
+        - kind: HelmRelease
+          name: tailscale-operator
+        - kind: HelmRelease
+          name: istiod
+        - kind: HelmRelease
+          name: prometheus-operator-crds
+        - kind: HelmRelease
+          name: loki
+        - kind: HelmRelease
+          name: tempo
+        - kind: HelmRelease
+          name: mimir
+    target:
+      kind: HelmRelease
+      name: k8s-monitoring
