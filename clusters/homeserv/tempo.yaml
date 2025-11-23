@@ -17,7 +17,7 @@ spec:
   retryInterval: 5m
   timeout: 5m
   sourceRef:
-    kind: OCIRepository
+    kind: GitRepository
     name: flux-system
     namespace: flux-system
   path: ./base/applications/tempo
