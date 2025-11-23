@@ -6,7 +6,7 @@ resources:
 - cert-manager.yaml
 - deluge.yaml
 - intel.yaml
-- istio-system.yaml
+- istio.yaml
 - jellyfin.yaml
 - kiali.yaml
 - lgtm.yaml
