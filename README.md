@@ -33,22 +33,27 @@ This cluster runs several self-hosted applications:
 
 ## Prerequisites
 
-- [k3d](https://k3d.io/)
+- [k3d](https://k3d.io/) or
+  [canonical k8s](https://github.com/canonical/k8s-snap)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 
 ## Deployment
 
 1. Create the k3d cluster:
    ```bash
-   k3d cluster create --config k3d-configs/lab.yaml
+   curl -fsSL https://raw.githubusercontent.com/theZMC/k8s/refs/heads/main/k3d-configs/homeserv.yaml | k3d cluster create --config /dev/stdin
    ```
-
-2. Install the gotk-components into the cluster with kustomize:
+   Alternatively, if using canonical k8s:
    ```bash
-   kubectl apply -k https://github.com/theZMC/k8s.git/clusters/lab?ref=main
+   curl -fsSL https://raw.githubusercontent.com/theZMC/k8s/refs/heads/main/k8s-configs/homeserv.yaml | sudo k8s bootstrap --config -
    ```
 
-3. Create the secret for SOPS decryption:
+1. Install the gotk-components into the cluster with kustomize:
+   ```bash
+   kubectl apply -k https://github.com/theZMC/k8s.git/clusters/homeserv?ref=main
+   ```
+
+1. Create the secret for SOPS decryption:
    ```bash
    kubectl create secret generic sops-gpg --from-file=path/to/the/private.key -n flux-system
    ```
