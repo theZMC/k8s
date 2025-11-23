@@ -1,0 +1,13 @@
+cluster-config:
+  network:
+    enabled: false
+  ingress:
+    enabled: false
+  metrics-server:
+    enabled: false
+  load-balancer:
+    enabled: false
+  local-storage:
+    enabled: false
+  gateway:
+    enabled: false
