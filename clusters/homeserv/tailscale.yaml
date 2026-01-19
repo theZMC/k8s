@@ -17,7 +17,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./base/infrastructure/tailscale
+  path: ./kustomizations/infrastructure/tailscale
   prune: true
   wait: true
   patches:
