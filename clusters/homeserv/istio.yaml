@@ -51,15 +51,3 @@ spec:
     target:
       kind: HelmRelease
       name: istiod
-  - patch: |
-      apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      metadata:
-        name: cni
-      spec:
-        values:
-          global:
-            platform: k3d
-    target:
-      kind: HelmRelease
-      name: cni
