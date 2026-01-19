@@ -1,13 +1,5 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/kustomization-kustomize-v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
+apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: calico
-spec:
-  targetNamespace: kube-system
-  interval: 1h
-  sourceRef:
-    kind: GitRepository
-    name: calico
-  path: manifests/calico.yaml
-  prune: true
+resources:
+- gitrepository.yaml
+- manifests.yaml
