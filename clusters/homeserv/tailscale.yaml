@@ -30,11 +30,11 @@ spec:
         targetNamespace: tailscale
         valuesFrom:
         - kind: Secret
-          name: oauth
+          name: tailscale-oauth
           valuesKey: client-id
           targetPath: oauth.clientId
         - kind: Secret
-          name: oauth
+          name: tailscale-oauth
           valuesKey: client-secret
           targetPath: oauth.clientSecret
         values:
