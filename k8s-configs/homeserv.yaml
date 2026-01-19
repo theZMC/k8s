@@ -1,6 +1,4 @@
 cluster-config:
-  network:
-    enabled: false
   ingress:
     enabled: false
   metrics-server:
