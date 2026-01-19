@@ -21,7 +21,7 @@ spec:
   wait: true
   patches:
   - patch: |
-      - op: replace
+      - op: add
         path: /spec/values/operatorConfig/hostname
         value: homeserv
       - op: add
