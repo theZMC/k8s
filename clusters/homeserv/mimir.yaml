@@ -19,7 +19,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./base/applications/mimir
+  path: ./kustomizations/applications/mimir
   prune: true
   wait: true
   patches:

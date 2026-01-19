@@ -20,7 +20,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./base/applications/grafana
+  path: ./kustomizations/applications/grafana
   prune: true
   wait: true
   patches:
