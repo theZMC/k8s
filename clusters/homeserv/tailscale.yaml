@@ -21,11 +21,12 @@ spec:
   wait: true
   patches:
   - patch: |
-      spec:
-        targetNamespace: tailscale
-        values:
-          operatorConfig:
-            hostname: homeserv
+      - op: replace
+        path: /spec/values/operatorConfig/hostname
+        value: homeserv
+      - op: add
+        path: /spec/targetNamespace
+        value: tailscale
     target:
       kind: HelmRelease
       name: tailscale-operator
