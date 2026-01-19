@@ -15,7 +15,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: tailscale
-        namespace: tailscale
   values:
     apiServerProxyConfig:
       allowImpersonation: true
