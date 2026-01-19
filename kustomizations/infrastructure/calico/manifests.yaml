@@ -9,5 +9,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: calico
-  path: manifests/calico.yaml
-  prune: true
+  path: ./manifests
+  prune: false
