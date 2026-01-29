@@ -15,6 +15,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
+  targetNamespace: flux-system
   retryInterval: 2m
   timeout: 5m
   sourceRef:
@@ -31,6 +32,7 @@ spec:
       metadata:
         name: intel
       spec:
+        targetNamespace: intel
         dependsOn:
         - name: cert-manager
         - name: node-feature-discovery
