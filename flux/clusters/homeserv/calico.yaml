@@ -9,6 +9,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./flux/base/manifests/calico
+  path: ./flux/base/kustomizations/calico
   prune: true
   wait: true
