@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jellyfin
+  name: jellyfin
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate # To prevent GPU assignment contention
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jellyfin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jellyfin
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 1000
+      containers:
+      - image: lscr.io/linuxserver/jellyfin:10.11.1
+        name: jellyfin
+        resources:
+          limits:
+            memory: 8Gi
+            gpu.intel.com/i915: 1
+          requests:
+            memory: 4Gi
+            cpu: 500m
+        env:
+        - name: DOCKER_MODS
+          value: linuxserver/mods:jellyfin-opencl-intel
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: America/Chicago
+        ports:
+        - containerPort: 8096
+          protocol: TCP
+        - containerPort: 7359
+          protocol: UDP
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /data
+          name: media
+      volumes:
+      - name: config
+        hostPath:
+          path: /megamind/config/jellyfin
+      - name: media
+        hostPath:
+          path: /bigdata/media

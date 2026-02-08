@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/ocirepository-source-v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: mimir-distributed
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: oci://ghcr.io/grafana/helm-charts/mimir-distributed
+  ref:
+    tag: 6.0.0

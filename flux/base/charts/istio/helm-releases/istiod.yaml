@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: istiod
+  namespace: flux-system
+spec:
+  targetNamespace: istio-system
+  interval: 1h
+  chart:
+    spec:
+      chart: istiod
+      version: 1.27.3
+      sourceRef:
+        kind: HelmRepository
+        name: istio
+  dependsOn:
+  - name: base
+  values:
+    profile: ambient
+    cni:
+      enabled: true
+    meshConfig:
+      enableTracing: true
+      defaultProviders:
+        metrics:
+        - opentelemetry
+        accessLogging:
+        - opentelemetry
+        tracing:
+        - opentelemetry
+      extensionProviders:
+      - name: opentelemetry
+        opentelemetry:
+          service: k8s-monitoring-alloy-receiver.k8s-monitoring
+          port: 4317
+  valuesFrom:
+  - kind: ConfigMap
+    name: istiod-values
+    optional: true
+  - kind: Secret
+    name: istiod-values
+    optional: true

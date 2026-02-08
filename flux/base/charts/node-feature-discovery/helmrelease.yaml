@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfd
+  namespace: flux-system
+spec:
+  targetNamespace: node-feature-discovery
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: node-feature-discovery
+  valuesFrom:
+  - kind: ConfigMap
+    name: node-feature-discovery-values
+    optional: true
+  - kind: Secret
+    name: node-feature-discovery-values
+    optional: true

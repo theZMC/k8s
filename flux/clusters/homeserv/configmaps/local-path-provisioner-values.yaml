@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: local-path-provisioner-values
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+stringData:
+  values.yaml: |
+    nodePathMap:
+    - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+      paths:
+      - /megamind/k8s/dynamic/local-path-provisioner

@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k8s-monitoring
+  namespace: flux-system
+spec:
+  targetNamespace: k8s-monitoring
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: k8s-monitoring
+  valuesFrom:
+  - kind: ConfigMap
+    name: k8s-monitoring-values
+    optional: true
+  - kind: Secret
+    name: k8s-monitoring-values
+    optional: true
+  values:
+    destinations:
+    - name: mimir
+      type: prometheus
+      url: http://mimir-gateway.mimir/api/v1/push
+    - name: loki
+      type: loki
+      url: http://loki-gateway.loki/loki/api/v1/push
+    - name: tempo
+      type: otlp
+      url: http://tempo-gateway.tempo/otlp/v1/traces
+    annotationAutodiscovery:
+      enabled: true
+      annotations:
+        scrape: prometheus.io/scrape
+        metricsPath: prometheus.io/path
+        metricsPortNumber: prometheus.io/port
+    clusterMetrics:
+      enabled: true
+    clusterEvents:
+      enabled: true
+    podLogs:
+      enabled: true
+    applicationObservability:
+      enabled: true
+      receivers:
+        otlp:
+          http:
+            enabled: true
+          grpc:
+            enabled: true
+    prometheusOperatorObjects:
+      enabled: true
+    alloy-metrics:
+      enabled: true
+    alloy-logs:
+      enabled: true
+    alloy-singleton:
+      enabled: true
+    alloy-receiver:
+      enabled: true
+      alloy:
+        extraPorts:
+        - name: otlp-http
+          port: 4318
+          targetPort: 4318
+          protocol: TCP
+        - name: otlp-grpc
+          port: 4317
+          targetPort: 4317
+          protocol: TCP

@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mimir
+  namespace: flux-system
+spec:
+  targetNamespace: mimir
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mimir-distributed
+  valuesFrom:
+  - kind: ConfigMap
+    name: mimir-values
+    optional: true
+  - kind: Secret
+    name: mimir-values
+    optional: true
+  values:
+    nginx:
+      enabled: false
+    alertManager:
+      enabled: false
+    ruler:
+      enabled: false
+    query_scheduler:
+      enabled: false
+    overrides_exporter:
+      enabled: false
+    minio:
+      enabled: true
+    ingester:
+      zoneAwareReplication:
+        enabled: false
+      replicas: 2
+    store_gateway:
+      zoneAwareReplication:
+        enabled: false
+      replicas: 1
+    querier:
+      replicas: 1
+    mimir:
+      structuredConfig:
+        memberlist:
+          cluster_label: mimir
+        limits:
+          max_global_series_per_user: 50000
+          max_label_names_per_series: 250
+        querier:
+          max_concurrent: 1024
+        query_scheduler:
+          max_outstanding_requests_per_tenant: 0

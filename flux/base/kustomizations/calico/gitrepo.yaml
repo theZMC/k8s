@@ -1,0 +1,13 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: calico
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://github.com/projectcalico/calico.git
+  ref:
+    tag: v3.31.3
+  ignore: |
+    /*
+    !manifests/calico.yaml

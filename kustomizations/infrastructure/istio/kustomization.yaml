@@ -1,6 +1,0 @@
-resources:
-- helmrepository.yaml
-- base-hr.yaml
-- cni-hr.yaml
-- istiod-hr.yaml
-- ztunnel-hr.yaml

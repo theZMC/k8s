@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  targetNamespace: cert-manager
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager
+  valuesFrom:
+  - kind: ConfigMap
+    name: cert-manager-values
+    optional: true
+  - kind: Secret
+    name: cert-manager-values
+    optional: true
+  values:
+    crds:
+      enabled: true
