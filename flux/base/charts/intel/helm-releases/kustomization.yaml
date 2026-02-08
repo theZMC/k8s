@@ -2,3 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 resources:
 - device-plugin-operator.yaml
 - gpu-device-plugin.yaml
+namespace: flux-system

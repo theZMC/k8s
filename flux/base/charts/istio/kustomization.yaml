@@ -3,3 +3,4 @@ resources:
 - ./helm-releases
 - helmrepository.yaml
 - namespace.yaml
+namespace: flux-system
