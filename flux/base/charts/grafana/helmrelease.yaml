@@ -4,7 +4,7 @@ metadata:
   name: grafana
   namespace: flux-system
 spec:
-  releaseName: grafana
+  targetNamespace: grafana
   interval: 1h
   chartRef:
     kind: OCIRepository
