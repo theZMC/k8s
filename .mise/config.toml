@@ -1,0 +1,6 @@
+[tools]
+flux2 = "2.7.5"
+pre-commit = "4"
+sops = "3.9.4"
+trufflehog = "3.92.5"
+yamlfmt = "0.21.0"
