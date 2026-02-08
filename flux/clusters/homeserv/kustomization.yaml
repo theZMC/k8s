@@ -4,7 +4,6 @@ resources:
 - flux-system/
 - configmaps/
 - secrets/
-- calico.yaml
 - cert-manager.yaml
 - deluge.yaml
 - grafana.yaml
