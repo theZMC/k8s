@@ -4,3 +4,4 @@ metadata:
   name: mimir
   labels:
     istio.io/dataplane-mode: ambient
+  namespace: flux-system

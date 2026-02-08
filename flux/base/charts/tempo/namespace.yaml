@@ -4,3 +4,4 @@ metadata:
   name: tempo
   labels:
     istio.io/dataplane-mode: ambient
+  namespace: flux-system

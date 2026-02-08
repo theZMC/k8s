@@ -2,5 +2,6 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: tailscale
+  namespace: flux-system
 spec:
   url: https://pkgs.tailscale.com/helmcharts

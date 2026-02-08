@@ -4,3 +4,4 @@ metadata:
   name: loki
   labels:
     istio.io/dataplane-mode: ambient
+  namespace: flux-system

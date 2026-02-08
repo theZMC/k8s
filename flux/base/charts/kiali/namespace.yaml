@@ -4,3 +4,4 @@ metadata:
   name: kiali
   labels:
     istio.io/dataplane-mode: ambient
+  namespace: flux-system
