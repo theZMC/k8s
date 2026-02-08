@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: local-path-provisioner-values
+  namespace: flux-system
   labels:
     reconcile.fluxcd.io/watch: Enabled
 stringData:
