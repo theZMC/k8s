@@ -1,4 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 resources:
-- device-plugin-operator.yaml
+- device-plugins-operator.yaml
 - gpu-device-plugin.yaml
