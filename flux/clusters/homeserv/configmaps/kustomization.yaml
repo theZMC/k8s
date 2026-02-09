@@ -3,4 +3,6 @@ resources:
 - istiod-values.yaml
 - k8s-monitoring-values.yaml
 - local-path-provisioner-values.yaml
+- loki-values.yaml
 - tailscale-values.yaml
+- tempo-values.yaml
