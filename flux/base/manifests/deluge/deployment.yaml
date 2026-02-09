@@ -56,7 +56,6 @@ spec:
           name: downloads
       volumes:
       - name: config
-        emptyDir: {}
         hostPath:
           path: /megamind/config/deluge
       - name: downloads
