@@ -26,26 +26,6 @@ spec:
       users:
         auto_assign_org: true
         auto_assign_org_role: Admin
-    dashboards:
-      istio:
-        mesh:
-          gnetId: 7639
-          datasource: Mimir
-        service:
-          gnetId: 7636
-          datasource: Mimir
-        workload:
-          gnetId: 7630
-          datasource: Mimir
-        performance:
-          gnetId: 11829
-          datasource: Mimir
-        control-plane:
-          gnetId: 7645
-          datasource: Mimir
-        wasm-extension:
-          gnetId: 13277
-          datasource: Mimir
     datasources:
       datasources.yaml:
         apiVersion: 1
