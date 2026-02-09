@@ -8,4 +8,4 @@ spec:
   interval: 1h
   url: oci://registry.k8s.io/nfd/charts/node-feature-discovery
   ref:
-    tag: 0.18.2
+    tag: 0.18.3

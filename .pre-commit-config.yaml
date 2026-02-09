@@ -1,11 +1,11 @@
 repos:
 - repo: https://github.com/trufflesecurity/trufflehog
-  rev: v3.90.12
+  rev: v3.93.1
   hooks:
   - id: trufflehog
 
 - repo: https://github.com/google/yamlfmt
-  rev: v0.20.0
+  rev: v0.21.0
   hooks:
   - id: yamlfmt
     exclude: ^flux/clusters/.*(/flux-system|/secrets)/.*$

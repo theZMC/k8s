@@ -8,4 +8,4 @@ spec:
   interval: 1h
   url: oci://ghcr.io/grafana/helm-charts/tempo-distributed
   ref:
-    tag: 1.52.7
+    tag: 1.61.3

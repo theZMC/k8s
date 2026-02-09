@@ -8,4 +8,4 @@ spec:
   interval: 1h
   url: oci://ghcr.io/grafana/helm-charts/k8s-monitoring
   ref:
-    tag: 3.5.6
+    tag: 3.8.0
