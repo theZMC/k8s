@@ -4,4 +4,3 @@ metadata:
   name: node-feature-discovery
   labels:
     istio.io/dataplane-mode: ambient
-  namespace: flux-system

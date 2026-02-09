@@ -4,4 +4,3 @@ metadata:
   name: k8s-monitoring
   labels:
     istio.io/dataplane-mode: ambient
-  namespace: flux-system

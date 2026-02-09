@@ -3,4 +3,3 @@ resources:
 - helmrelease.yaml
 - namespace.yaml
 - ocirepository.yaml
-namespace: flux-system

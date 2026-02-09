@@ -4,4 +4,3 @@ resources:
 - cni.yaml
 - istiod.yaml
 - ztunnel.yaml
-namespace: flux-system
