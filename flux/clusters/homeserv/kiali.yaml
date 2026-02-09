@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/kiali
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

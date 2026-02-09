@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/tailscale
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

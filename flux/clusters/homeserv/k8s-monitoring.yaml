@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/k8s-monitoring
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

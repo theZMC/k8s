@@ -12,8 +12,6 @@ spec:
   path: ./flux/base/manifests/deluge
   prune: true
   wait: true
-  dependsOn:
-  - name: istio
   postBuild:
     substituteFrom:
     - kind: Secret

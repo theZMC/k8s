@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/tempo
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

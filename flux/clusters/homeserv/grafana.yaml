@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/grafana
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

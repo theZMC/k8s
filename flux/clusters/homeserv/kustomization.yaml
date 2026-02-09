@@ -8,7 +8,6 @@ resources:
 - deluge.yaml
 - grafana.yaml
 - intel.yaml
-- istio.yaml
 - jellyfin.yaml
 - k8s-monitoring.yaml
 - kiali.yaml

@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/charts/loki
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

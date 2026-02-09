@@ -11,5 +11,3 @@ spec:
   path: ./flux/base/charts/cert-manager
   prune: true
   wait: true
-  dependsOn:
-  - name: istio

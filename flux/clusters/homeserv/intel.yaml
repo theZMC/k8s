@@ -13,5 +13,4 @@ spec:
   prune: true
   wait: true
   dependsOn:
-  - name: istio
   - name: node-feature-discovery

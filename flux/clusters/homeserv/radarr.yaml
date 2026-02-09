@@ -12,5 +12,3 @@ spec:
   path: ./flux/base/manifests/radarr
   prune: true
   wait: true
-  dependsOn:
-  - name: istio
