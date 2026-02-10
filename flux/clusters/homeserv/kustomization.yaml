@@ -6,6 +6,7 @@ resources:
 - secrets/
 - cert-manager.yaml
 - deluge.yaml
+- gateway-api.yaml
 - grafana.yaml
 - intel.yaml
 - jellyfin.yaml
