@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gpu-resource-driver
+  namespace: flux-system
+spec:
+  targetNamespace: intel
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: gpu-resource-driver
