@@ -10,7 +10,7 @@ spec:
       paths:
       - backend:
           service:
-            name: deluge
+            name: web
             port:
               number: 8112
         path: /
