@@ -1,8 +1,8 @@
 [tools]
 cilium-cli = "0"
-flux2 = "2.7.5"
+flux2 = "2.9.5"
 k3d = "5"
 pre-commit = "4"
-sops = "3.11.0"
-trufflehog = "3.92.5"
+sops = "3.13.3"
+trufflehog = "3.97.4"
 yamlfmt = "0.21.0"
